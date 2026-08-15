@@ -1,7 +1,12 @@
-name: Multiplatform Build & Deploy
+name: iOS Build IPA
 
 on:
   workflow_dispatch:
+    inputs:
+      base_name:
+        description: 'Nombre del archivo base'
+        required: true
+        default: 'Nezco'
 
 jobs:
   build:
@@ -27,14 +32,15 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
 
+      - name: Make gradlew executable
+        run: chmod +x gradlew
+
       - name: Build All Targets
         run: ./gradlew :composeApp:assembleRelease :composeApp:wasmJsBrowserDistribution
 
       - name: Build iOS App (No Sign)
         run: |
-          mkdir -p iosApp/build/Release-iphoneos/iosApp.app
           # Here we would normally run xcodebuild if an iosApp project existed.
-          # Since this is a KMP template, we assume the user might have an iosApp folder.
           if [ -d "iosApp" ]; then
             cd iosApp
             xcodebuild -scheme iosApp \
@@ -49,14 +55,15 @@ jobs:
       - name: Package IPA Manually
         run: |
           mkdir -p Payload
-          if [ -d "iosApp/build/Release-iphoneos/iosApp.app" ]; then
-            cp -r iosApp/build/Release-iphoneos/iosApp.app Payload/
+          APP_PATH=$(find . -name "*.app" -type d | grep "Release-iphoneos" | head -n 1)
+          if [ -n "$APP_PATH" ]; then
+            cp -r "$APP_PATH" Payload/
           else
-            # Placeholder for Sideloading strategy demonstration
-            mkdir -p Payload/Nezco.app
-            echo "Dummy for Sideloading" > Payload/Nezco.app/Info.plist
+            # Fallback if no .app is found
+            mkdir -p Payload/${{ github.event.inputs.base_name }}.app
+            echo "Dummy for Sideloading" > Payload/${{ github.event.inputs.base_name }}.app/Info.plist
           fi
-          zip -r Nezco.ipa Payload
+          zip -r ${{ github.event.inputs.base_name }}.ipa Payload
           
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
@@ -65,13 +72,12 @@ jobs:
           name: Release v${{ github.run_number }}
           files: |
             composeApp/build/outputs/apk/release/*.apk
-            Nezco.ipa
+            ${{ github.event.inputs.base_name }}.ipa
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy to Vercel (Preview)
         uses: amondnet/vercel-action@v20
-        if: github.event_name == 'workflow_dispatch'
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
