@@ -43,7 +43,7 @@ jobs:
 
       - name: Build iOS App (No Sign)
         run: |
-          if [ -d "iosApp" ]; then
+          if [ -d "iosApp" ] && [ -f "iosApp/iosApp.xcodeproj/project.pbxproj" ]; then
             cd iosApp
             xcodebuild -scheme iosApp \
               -configuration Release \
@@ -52,6 +52,8 @@ jobs:
               CODE_SIGNING_REQUIRED=NO \
               clean build
             cd ..
+          else
+            echo "Skipping iOS build: iosApp project not found or incomplete."
           fi
 
       - name: Package IPA Manually

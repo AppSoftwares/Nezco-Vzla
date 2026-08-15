@@ -24,15 +24,8 @@ kotlin {
     @OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
     wasmJs {
         browser {
-            val projectDirPath = project.projectDir.path
             commonWebpackConfig {
                 outputFileName = "composeApp.js"
-                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
-                    static = (static ?: mutableListOf()).apply {
-                        // Serve sources to debug inside browser
-                        add(projectDirPath)
-                    }
-                }
             }
         }
         binaries.executable()
@@ -83,6 +76,10 @@ kotlin {
         wasmJsMain.dependencies {
         }
     }
+}
+
+compose.resources {
+    publicResClass = true
 }
 
 android {
