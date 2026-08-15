@@ -78,8 +78,7 @@ kotlin {
             implementation("org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.8.4")
             implementation("org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose:2.8.4")
             
-            // Use core coroutines for KMP
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
+            implementation(libs.kotlinx.coroutines.core)
         }
         iosMain.dependencies {
         }
