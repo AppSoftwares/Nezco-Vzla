@@ -74,11 +74,12 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             
-            // Use Multiplatform lifecycle versions
+            // Multiplatform lifecycle versions
             implementation("org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.8.4")
             implementation("org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose:2.8.4")
             
-            implementation(libs.kotlinx.coroutines.core)
+            // Use core coroutines for KMP
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
         }
         iosMain.dependencies {
         }
