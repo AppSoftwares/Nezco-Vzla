@@ -1,0 +1,7 @@
+{
+  "name": "Nezco",
+  "description": "Sistema integral de gestión de venta, recarga y mantenimiento de extintores, logística con GPS, taller, inventario, nómina LOTTT y finanzas de Grupo Nezco Venezuela, C.A.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
