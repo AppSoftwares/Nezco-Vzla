@@ -36,11 +36,10 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build All Targets
-        run: ./gradlew :composeApp:assembleRelease :composeApp:wasmJsBrowserDistribution
+        run: ./gradlew :composeApp:assembleRelease :composeApp:wasmJsBrowserDistribution --stacktrace --no-configuration-cache
 
       - name: Build iOS App (No Sign)
         run: |
-          # Here we would normally run xcodebuild if an iosApp project existed.
           if [ -d "iosApp" ]; then
             cd iosApp
             xcodebuild -scheme iosApp \
@@ -59,7 +58,6 @@ jobs:
           if [ -n "$APP_PATH" ]; then
             cp -r "$APP_PATH" Payload/
           else
-            # Fallback if no .app is found
             mkdir -p Payload/${{ github.event.inputs.base_name }}.app
             echo "Dummy for Sideloading" > Payload/${{ github.event.inputs.base_name }}.app/Info.plist
           fi
