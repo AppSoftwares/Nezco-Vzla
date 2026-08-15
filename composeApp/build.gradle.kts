@@ -133,4 +133,6 @@ secrets {
 
 dependencies {
     debugImplementation(compose.uiTooling)
+    add("kspAndroid", libs.androidx.room.compiler)
+    add("kspAndroid", libs.moshi.kotlin.codegen)
 }

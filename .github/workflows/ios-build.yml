@@ -35,11 +35,14 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x gradlew
 
-      - name: Clean build
-        run: ./gradlew clean
+      - name: Clean
+        run: ./gradlew clean --no-daemon
 
-      - name: Build All
-        run: ./gradlew :composeApp:assembleRelease :composeApp:wasmJsBrowserDistribution --stacktrace --no-configuration-cache --console=plain -Pandroid.skip.google.services=true
+      - name: Build Android APK
+        run: ./gradlew :composeApp:assembleRelease --info --stacktrace --no-daemon --no-configuration-cache --console=plain -Pandroid.skip.google.services=true
+
+      - name: Build Web (Wasm)
+        run: ./gradlew :composeApp:wasmJsBrowserDistribution --info --stacktrace --no-daemon --no-configuration-cache --console=plain -Pandroid.skip.google.services=true
 
       - name: Build iOS App (No Sign)
         run: |
