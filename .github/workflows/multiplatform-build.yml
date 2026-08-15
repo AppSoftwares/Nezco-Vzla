@@ -35,8 +35,11 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x gradlew
 
-      - name: Build All Targets
-        run: ./gradlew :composeApp:assembleRelease :composeApp:wasmJsBrowserDistribution --stacktrace --no-configuration-cache
+      - name: Build Android APK
+        run: ./gradlew :composeApp:assembleRelease --stacktrace
+
+      - name: Build Web (Wasm)
+        run: ./gradlew :composeApp:wasmJsBrowserDistribution --stacktrace
 
       - name: Build iOS App (No Sign)
         run: |

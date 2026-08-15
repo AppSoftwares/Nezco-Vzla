@@ -63,8 +63,6 @@ kotlin {
             implementation(libs.androidx.room.ktx)
             implementation(libs.moshi.kotlin)
             implementation(libs.firebase.ai)
-            implementation(libs.androidx.lifecycle.viewmodel.compose)
-            implementation(libs.androidx.lifecycle.runtime.compose)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -74,9 +72,9 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             
-            // Multiplatform lifecycle versions
-            implementation("org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.8.4")
-            implementation("org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose:2.8.4")
+            // Multiplatform lifecycle
+            implementation(libs.androidx.lifecycle.viewmodel.compose)
+            implementation(libs.androidx.lifecycle.runtime.compose)
             
             implementation(libs.kotlinx.coroutines.core)
         }
