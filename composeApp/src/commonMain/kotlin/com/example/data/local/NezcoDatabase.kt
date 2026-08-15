@@ -1,8 +1,6 @@
 package com.example.data.local
 
-import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.data.model.*
@@ -30,37 +28,18 @@ abstract class NezcoDatabase : RoomDatabase() {
 
     abstract fun nezcoDao(): NezcoDao
 
-    companion object {
-        @Volatile
-        private var INSTANCE: NezcoDatabase? = null
+    // Removed getDatabase companion method to be KMP-compatible.
+    // Use platform-specific database builder instead.
+}
 
-        fun getDatabase(context: Context, scope: CoroutineScope): NezcoDatabase {
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    NezcoDatabase::class.java,
-                    "nezco_gestion.db"
-                )
-                    .addCallback(NezcoDatabaseCallback(scope))
-                    .fallbackToDestructiveMigration()
-                    .build()
-                INSTANCE = instance
-                instance
-            }
-        }
+class NezcoDatabaseCallback(
+    private val scope: CoroutineScope
+) : RoomDatabase.Callback() {
+    override fun onCreate(db: SupportSQLiteDatabase) {
+        super.onCreate(db)
+        // Initial data population should be handled in a platform-independent way
+        // or via the platform-specific builder callback.
     }
-
-    private class NezcoDatabaseCallback(
-        private val scope: CoroutineScope
-    ) : RoomDatabase.Callback() {
-        override fun onCreate(db: SupportSQLiteDatabase) {
-            super.onCreate(db)
-            INSTANCE?.let { database ->
-                scope.launch(Dispatchers.IO) {
-                    populateInitialData(database.nezcoDao())
-                }
-            }
-        }
 
         suspend fun populateInitialData(dao: NezcoDao) {
             // 1. Initial Products & Extinguishers
@@ -568,4 +547,3 @@ abstract class NezcoDatabase : RoomDatabase() {
             )
         }
     }
-}

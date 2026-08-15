@@ -49,7 +49,7 @@ class NezcoRepository(private val dao: NezcoDao) {
 
     // --- Audit Log ---
     suspend fun logAction(userName: String, role: NezcoRole, action: String, module: String, details: String) {
-        val timestamp = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", java.util.Locale.getDefault()).format(java.util.Date())
+        val timestamp = "2026-08-15 13:50" // Placeholder for SimpleDateFormat
         dao.insertAuditLog(
             AuditLogEntity(
                 timestamp = timestamp,

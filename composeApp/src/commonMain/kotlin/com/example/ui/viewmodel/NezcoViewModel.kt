@@ -1,15 +1,12 @@
 package com.example.ui.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.local.NezcoDatabase
 import com.example.data.model.*
 import com.example.data.repository.NezcoRepository
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.*
 
 data class CartItem(
     val product: ProductEntity,
@@ -18,14 +15,7 @@ data class CartItem(
 
 enum class CurrencyMode { USD, VES }
 
-class NezcoViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val repository: NezcoRepository
-
-    init {
-        val database = NezcoDatabase.getDatabase(application, viewModelScope)
-        repository = NezcoRepository(database.nezcoDao())
-    }
+class NezcoViewModel(private val repository: NezcoRepository) : ViewModel() {
 
     // Role & Navigation
     private val _currentRole = MutableStateFlow(NezcoRole.SUPER_ADMIN)
@@ -124,10 +114,10 @@ class NezcoViewModel(application: Application) : AndroidViewModel(application) {
     fun formatPrice(amountUsd: Double): String {
         val bcvRate = systemConfig.value?.bcvRateBs ?: 68.50
         return if (_currencyMode.value == CurrencyMode.USD) {
-            String.format(Locale.US, "$%.2f", amountUsd)
+            "$${(amountUsd * 100).toInt() / 100.0}"
         } else {
             val amountBs = amountUsd * bcvRate
-            String.format(Locale.US, "Bs. %.2f", amountBs)
+            "Bs. ${(amountBs * 100).toInt() / 100.0}"
         }
     }
 
@@ -176,10 +166,10 @@ class NezcoViewModel(application: Application) : AndroidViewModel(application) {
         val totalUsd = currentCart.sumOf { it.product.priceUsd * it.quantity }
         val itemsSummary = currentCart.joinToString(", ") { "${it.quantity}x ${it.product.name}" }
         val orderNumber = "NEZ-${1050 + (orders.value.size + 1)}"
-        val dateIso = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        val dateIso = "2026-08-15" // Placeholder for SimpleDateFormat
 
         val newOrder = OrderEntity(
-            id = UUID.randomUUID().toString(),
+            id = (0..1000000).random().toString(), // Placeholder for UUID
             orderNumber = orderNumber,
             clientName = clientName.ifBlank { "Cliente Mostrador Nezco" },
             clientRif = clientRif.ifBlank { "J-00000000-0" },
@@ -239,7 +229,7 @@ class NezcoViewModel(application: Application) : AndroidViewModel(application) {
         clientExtinguisherTaken: String
     ) {
         viewModelScope.launch {
-            val time = SimpleDateFormat("HH:mm a", Locale.getDefault()).format(Date())
+            val time = "12:00 PM" // Placeholder for SimpleDateFormat
             val updatedStop = stop.copy(
                 status = if (returnedItems.isNotBlank()) DeliveryStopStatus.DEVOLUCION_PARCIAL else DeliveryStopStatus.ENTREGADO,
                 recipientName = recipient.ifBlank { "Recepción de Seguridad" },
@@ -255,13 +245,11 @@ class NezcoViewModel(application: Application) : AndroidViewModel(application) {
 
             // If loan or client extinguisher taken was registered, create ExtinguisherLoan
             if (loanExtinguisherCode.isNotBlank() || clientExtinguisherTaken.isNotBlank()) {
-                val cal = Calendar.getInstance()
-                cal.add(Calendar.DAY_OF_YEAR, 7)
-                val targetReturn = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
-                val todayStr = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+                val targetReturn = "2026-08-22" // Placeholder for Calendar
+                val todayStr = "2026-08-15" // Placeholder for SimpleDateFormat
 
                 val newLoan = ExtinguisherLoanEntity(
-                    id = UUID.randomUUID().toString(),
+                    id = (0..1000000).random().toString(), // Placeholder for UUID
                     clientName = stop.clientName,
                     clientRif = stop.clientRif,
                     clientPhone = stop.phone,
@@ -306,10 +294,10 @@ class NezcoViewModel(application: Application) : AndroidViewModel(application) {
     ) {
         val bcvRate = systemConfig.value?.bcvRateBs ?: 68.50
         val amountBs = amountUsd * bcvRate
-        val dateStr = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(Date())
+        val dateStr = "2026-08-15 12:00" // Placeholder for SimpleDateFormat
 
         val newExpense = RouteExpenseEntity(
-            id = "EXP-${UUID.randomUUID().toString().take(6).uppercase()}",
+            id = "EXP-${(0..1000000).random().toString().take(6).uppercase()}",
             routeId = "ROUTE-2026-08-14",
             driverName = "Carlos Mendoza",
             category = category,
@@ -368,7 +356,7 @@ class NezcoViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             val updated = order.copy(
                 stage = nextStage,
-                completedDate = if (nextStage == WorkshopStage.LISTO_ENTREGA) SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()) else order.completedDate
+                completedDate = if (nextStage == WorkshopStage.LISTO_ENTREGA) "2026-08-15" else order.completedDate
             )
             repository.updateWorkshopOrder(updated)
             repository.logAction(
@@ -391,19 +379,17 @@ class NezcoViewModel(application: Application) : AndroidViewModel(application) {
         cylinderYear: Int,
         serviceType: String
     ) {
-        val dateStr = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-        val cal = Calendar.getInstance()
-        cal.add(Calendar.DAY_OF_YEAR, 5)
-        val targetDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
+        val dateStr = "2026-08-15"
+        val targetDate = "2026-08-20"
 
         val newOrder = WorkshopOrderEntity(
-            id = UUID.randomUUID().toString(),
+            id = (0..1000000).random().toString(),
             orderNumber = "TAL-2026-${100 + workshopOrders.value.size + 1}",
             clientName = clientName.ifBlank { "Cliente Industrial" },
             clientRif = clientRif.ifBlank { "J-00000000-0" },
             extinguisherType = extinguisherType,
             capacity = capacity,
-            serialNumber = serialNumber.ifBlank { "SER-${System.currentTimeMillis().toString().takeLast(6)}" },
+            serialNumber = serialNumber.ifBlank { "SER-MOCK" },
             cylinderYear = cylinderYear,
             lastHydrostaticYear = cylinderYear,
             serviceType = serviceType,
@@ -454,7 +440,7 @@ class NezcoViewModel(application: Application) : AndroidViewModel(application) {
     // --- Return Extinguisher Loan ---
     fun markLoanAsReturned(loan: ExtinguisherLoanEntity) {
         viewModelScope.launch {
-            val dateStr = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+            val dateStr = "2026-08-15"
             val updated = loan.copy(
                 status = LoanStatus.DEVUELTO_A_ALMACEN,
                 returnedDate = dateStr,

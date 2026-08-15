@@ -11,17 +11,19 @@ import com.example.ui.components.*
 import com.example.ui.screens.*
 import com.example.ui.theme.NezcoTheme
 import com.example.ui.viewmodel.NezcoViewModel
+import com.example.ui.viewmodel.provideNezcoViewModel
 
 @Composable
 fun App() {
+    val viewModel = provideNezcoViewModel()
     NezcoTheme {
-        NezcoApp()
+        NezcoApp(viewModel)
     }
 }
 
 @Composable
 fun NezcoApp(
-    viewModel: NezcoViewModel = viewModel { NezcoViewModel() } // Simplified for now, might need a factory
+    viewModel: NezcoViewModel
 ) {
     val currentRole by viewModel.currentRole.collectAsStateWithLifecycle()
     val currentTab by viewModel.currentTab.collectAsStateWithLifecycle()
