@@ -21,8 +21,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.data.model.NezcoRole
 import com.example.ui.theme.*
-import com.example.resources.Res
-import com.example.resources.*
+import nezco.composeapp.generated.resources.*
+import nezco.composeapp.generated.resources.Res
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 

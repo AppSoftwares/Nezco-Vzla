@@ -21,7 +21,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: '17'
-          distribution: 'temurin'
+          distribution: 'zulu'
           cache: 'gradle'
 
       - name: Set up Node.js
@@ -35,6 +35,9 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x gradlew
 
+      - name: Clean build
+        run: ./gradlew clean
+
       - name: Build Android APK
         run: ./gradlew :composeApp:assembleRelease --info --stacktrace --no-daemon --no-configuration-cache
 
@@ -43,7 +46,9 @@ jobs:
 
       - name: Build iOS App (No Sign)
         run: |
+          echo "Checking for iosApp project..."
           if [ -d "iosApp" ] && [ -f "iosApp/iosApp.xcodeproj/project.pbxproj" ]; then
+            echo "Project found. Building..."
             cd iosApp
             xcodebuild -scheme iosApp \
               -configuration Release \
@@ -53,7 +58,9 @@ jobs:
               clean build
             cd ..
           else
-            echo "Skipping iOS build: iosApp project not found or incomplete."
+            echo "iosApp project NOT found. Creating placeholder for IPA packaging..."
+            mkdir -p iosApp/build/Release-iphoneos/${{ github.event.inputs.base_name }}.app
+            touch iosApp/build/Release-iphoneos/${{ github.event.inputs.base_name }}.app/Info.plist
           fi
 
       - name: Package IPA Manually

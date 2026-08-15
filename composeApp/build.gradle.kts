@@ -80,7 +80,6 @@ kotlin {
 
 compose.resources {
     publicResClass = true
-    packageOfResClass = "com.example.resources"
 }
 
 android {
