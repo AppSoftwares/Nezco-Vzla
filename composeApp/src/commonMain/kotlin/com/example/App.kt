@@ -1,9 +1,5 @@
 package com.example
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -15,23 +11,17 @@ import com.example.ui.components.*
 import com.example.ui.screens.*
 import com.example.ui.theme.NezcoTheme
 import com.example.ui.viewmodel.NezcoViewModel
-import kotlinx.coroutines.delay
 
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            NezcoTheme {
-                NezcoApp()
-            }
-        }
+@Composable
+fun App() {
+    NezcoTheme {
+        NezcoApp()
     }
 }
 
 @Composable
 fun NezcoApp(
-    viewModel: NezcoViewModel = viewModel()
+    viewModel: NezcoViewModel = viewModel { NezcoViewModel() } // Simplified for now, might need a factory
 ) {
     val currentRole by viewModel.currentRole.collectAsStateWithLifecycle()
     val currentTab by viewModel.currentTab.collectAsStateWithLifecycle()

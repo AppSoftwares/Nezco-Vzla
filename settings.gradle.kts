@@ -24,4 +24,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Nezco"
 
-include(":app")
+include(":composeApp")
