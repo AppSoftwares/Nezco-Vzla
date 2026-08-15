@@ -1,7 +1,7 @@
 package com.example.ui.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -9,40 +9,42 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.data.model.NezcoRole
 import com.example.ui.theme.*
+import nezco.composeapp.generated.resources.Res
+import nezco.composeapp.generated.resources.*
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
 
 data class NavItem(
     val id: String,
     val label: String,
-    val icon: ImageVector,
-    val description: String
+    val iconRes: DrawableResource,
+    val description: String,
 )
 
 val allNavItems = listOf(
-    NavItem("dashboard", "Dashboard", Icons.Default.Dashboard, "Resumen general y métricas"),
-    NavItem("chofer_ruta", "Ruta Conductor", Icons.Default.LocalShipping, "Entregas, firma y evidencias"),
-    NavItem("despacho_radar", "Radar GPS", Icons.Default.AltRoute, "Monitoreo de flota en vivo"),
-    NavItem("catalogo", "Catálogo & POS", Icons.Default.Storefront, "Venta y fichas COVENIN"),
-    NavItem("taller", "Taller Recarga", Icons.Default.Build, "Mantenimiento y pruebas COVENIN"),
-    NavItem("almacen", "Almacén", Icons.Default.Inventory2, "Stock multicentral"),
-    NavItem("prestamos", "Comodato", Icons.Default.SwapHoriz, "Control de extintores cedidos"),
-    NavItem("cobranzas", "CxC / CxP", Icons.Default.ReceiptLong, "Cobranzas y proveedores"),
-    NavItem("gastos", "Gastos Ruta", Icons.Default.AccountBalanceWallet, "Combustible y viáticos"),
-    NavItem("nomina", "Nómina LOTTT", Icons.Default.Groups, "Leyes laborales venezolanas"),
-    NavItem("auditoria", "Auditoría", Icons.Default.History, "Trazabilidad inmutable")
+    NavItem("dashboard", "Dashboard", Res.drawable.ic_nav_metricas, "Resumen general y métricas"),
+    NavItem("chofer_ruta", "Ruta Conductor", Res.drawable.ic_nav_ruta, "Entregas, firma y evidencias"),
+    NavItem("despacho_radar", "Radar GPS", Res.drawable.ic_nav_modulos, "Monitoreo de flota en vivo"),
+    NavItem("catalogo", "Catálogo & POS", Res.drawable.ic_nav_ventas, "Venta y fichas COVENIN"),
+    NavItem("taller", "Taller Recarga", Res.drawable.ic_nav_taller, "Mantenimiento y pruebas COVENIN"),
+    NavItem("almacen", "Almacén", Res.drawable.ic_nav_modulos, "Stock multicentral"),
+    NavItem("prestamos", "Comodato", Res.drawable.ic_nav_modulos, "Control de extintores cedidos"),
+    NavItem("cobranzas", "CxC / CxP", Res.drawable.ic_nav_modulos, "Cobranzas y proveedores"),
+    NavItem("gastos", "Gastos Ruta", Res.drawable.ic_nav_modulos, "Combustible y viáticos"),
+    NavItem("nomina", "Nómina LOTTT", Res.drawable.ic_nav_modulos, "Leyes laborales venezolanas"),
+    NavItem("auditoria", "Auditoría", Res.drawable.ic_nav_modulos, "Trazabilidad inmutable")
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -57,129 +59,128 @@ fun NezcoBottomBar(
     val primaryItems = remember(currentRole) {
         when (currentRole) {
             NezcoRole.CHOFER -> listOf(
-                NavItem("chofer_ruta", "Ruta", Icons.Default.LocalShipping, "Entregas activas"),
-                NavItem("gastos", "Gastos", Icons.Default.AccountBalanceWallet, "Gastos de ruta"),
-                NavItem("prestamos", "Comodato", Icons.Default.SwapHoriz, "Extintores prestados")
+                NavItem("chofer_ruta", "Ruta", Res.drawable.ic_nav_ruta, "Entregas activas"),
+                NavItem("gastos", "Gastos", Res.drawable.ic_nav_modulos, "Gastos de ruta"),
+                NavItem("prestamos", "Comodato", Res.drawable.ic_nav_modulos, "Extintores prestados")
             )
             NezcoRole.DESPACHADOR -> listOf(
-                NavItem("despacho_radar", "Radar GPS", Icons.Default.AltRoute, "Monitoreo flota"),
-                NavItem("chofer_ruta", "Despachos", Icons.Default.LocalShipping, "Rutas activas"),
-                NavItem("prestamos", "Comodato", Icons.Default.SwapHoriz, "Préstamos")
+                NavItem("despacho_radar", "Radar GPS", Res.drawable.ic_nav_modulos, "Monitoreo flota"),
+                NavItem("chofer_ruta", "Despachos", Res.drawable.ic_nav_ruta, "Rutas activas"),
+                NavItem("prestamos", "Comodato", Res.drawable.ic_nav_modulos, "Préstamos")
             )
             NezcoRole.VENTA, NezcoRole.POS_LOCAL -> listOf(
-                NavItem("catalogo", "Catálogo", Icons.Default.Storefront, "Ventas y POS"),
-                NavItem("cobranzas", "Cobranzas", Icons.Default.ReceiptLong, "CxC Clientes"),
-                NavItem("almacen", "Stock", Icons.Default.Inventory2, "Disponibilidad")
+                NavItem("catalogo", "Catálogo", Res.drawable.ic_nav_ventas, "Ventas y POS"),
+                NavItem("cobranzas", "Cobranzas", Res.drawable.ic_nav_modulos, "CxC Clientes"),
+                NavItem("almacen", "Stock", Res.drawable.ic_nav_modulos, "Disponibilidad")
             )
             NezcoRole.TALLER -> listOf(
-                NavItem("taller", "Taller", Icons.Default.Build, "Órdenes de recarga"),
-                NavItem("almacen", "Insumos", Icons.Default.Inventory2, "Polvo y repuestos"),
-                NavItem("prestamos", "Comodato", Icons.Default.SwapHoriz, "Cilindros prestados")
+                NavItem("taller", "Taller", Res.drawable.ic_nav_taller, "Órdenes de recarga"),
+                NavItem("almacen", "Insumos", Res.drawable.ic_nav_modulos, "Polvo y repuestos"),
+                NavItem("prestamos", "Comodato", Res.drawable.ic_nav_modulos, "Cilindros prestados")
             )
             NezcoRole.ALMACENISTA -> listOf(
-                NavItem("almacen", "Almacén", Icons.Default.Inventory2, "Stock multicentral"),
-                NavItem("prestamos", "Comodato", Icons.Default.SwapHoriz, "Extintores cliente"),
-                NavItem("catalogo", "Catálogo", Icons.Default.Storefront, "Equipos")
+                NavItem("almacen", "Almacén", Res.drawable.ic_nav_modulos, "Stock multicentral"),
+                NavItem("prestamos", "Comodato", Res.drawable.ic_nav_modulos, "Extintores cliente"),
+                NavItem("catalogo", "Catálogo", Res.drawable.ic_nav_ventas, "Equipos")
             )
             NezcoRole.ADMIN, NezcoRole.SUPER_ADMIN -> listOf(
-                NavItem("dashboard", "Métricas", Icons.Default.Dashboard, "Panel general"),
-                NavItem("catalogo", "Ventas/POS", Icons.Default.Storefront, "Catálogo"),
-                NavItem("chofer_ruta", "Ruta", Icons.Default.LocalShipping, "Despachos"),
-                NavItem("taller", "Taller", Icons.Default.Build, "Recargas")
+                NavItem("dashboard", "Métricas", Res.drawable.ic_nav_metricas, "Panel general"),
+                NavItem("catalogo", "Ventas/POS", Res.drawable.ic_nav_ventas, "Catálogo"),
+                NavItem("chofer_ruta", "Ruta", Res.drawable.ic_nav_ruta, "Despachos"),
+                NavItem("taller", "Taller", Res.drawable.ic_nav_taller, "Recargas")
             )
         }
     }
 
     Surface(
-        color = EditorialSurface,
+        color = NezcoBarDark,
         shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
-        border = androidx.compose.foundation.BorderStroke(1.dp, EditorialBorder),
+        border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFF332223)),
         tonalElevation = 12.dp,
         modifier = Modifier.fillMaxWidth()
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .navigationBarsPadding()
-                .padding(horizontal = 16.dp, vertical = 10.dp),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            primaryItems.forEach { item ->
-                val isSelected = currentTab == item.id
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(16.dp))
-                        .clickable { onTabSelected(item.id) }
-                        .padding(horizontal = 8.dp, vertical = 4.dp),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    if (isSelected) {
-                        Surface(
-                            color = EditorialRedContainer,
-                            shape = RoundedCornerShape(18.dp),
-                            modifier = Modifier.size(width = 48.dp, height = 28.dp)
-                        ) {
-                            Box(contentAlignment = Alignment.Center) {
-                                Box(
-                                    modifier = Modifier
-                                        .size(6.dp)
-                                        .background(EditorialRed, CircleShape)
-                                )
-                            }
-                        }
-                    } else {
+        Box {
+            Image(
+                painter = painterResource(Res.drawable.bg_nav_manguera),
+                contentDescription = null,
+                modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter),
+                contentScale = ContentScale.FillWidth
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .navigationBarsPadding()
+                    .padding(horizontal = 16.dp, vertical = 10.dp),
+                horizontalArrangement = Arrangement.SpaceAround,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                primaryItems.forEach { item ->
+                    val isSelected = currentTab == item.id
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(16.dp))
+                            .clickable { onTabSelected(item.id) }
+                            .padding(horizontal = 8.dp, vertical = 4.dp),
+                        verticalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
                         Box(
                             modifier = Modifier.size(width = 48.dp, height = 28.dp),
                             contentAlignment = Alignment.Center
                         ) {
+                            if (isSelected) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(width = 42.dp, height = 28.dp)
+                                        .background(NezcoOrangeActive.copy(alpha = 0.2f), RoundedCornerShape(14.dp))
+                                )
+                            }
                             Icon(
-                                imageVector = item.icon,
+                                painter = painterResource(item.iconRes),
                                 contentDescription = item.label,
-                                tint = EditorialTextMuted,
-                                modifier = Modifier.size(20.dp)
+                                tint = if (isSelected) NezcoOrangeActive else NezcoCreamInactive,
+                                modifier = Modifier.size(24.dp)
                             )
                         }
+
+                        Text(
+                            text = item.label.uppercase(),
+                            fontSize = 9.sp,
+                            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
+                            letterSpacing = 1.sp,
+                            color = if (isSelected) NezcoOrangeActive else NezcoCreamInactive
+                        )
                     }
-
-                    Text(
-                        text = item.label.uppercase(),
-                        fontSize = 9.sp,
-                        fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
-                        letterSpacing = 1.sp,
-                        color = if (isSelected) EditorialRed else EditorialTextMuted
-                    )
                 }
-            }
 
-            // More Modules Pill
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .clip(RoundedCornerShape(16.dp))
-                    .clickable { showMoreSheet = true }
-                    .padding(horizontal = 8.dp, vertical = 4.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
-                Box(
-                    modifier = Modifier.size(width = 48.dp, height = 28.dp),
-                    contentAlignment = Alignment.Center
+                // More Modules Pill
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(16.dp))
+                        .clickable { showMoreSheet = true }
+                        .padding(horizontal = 8.dp, vertical = 4.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.Widgets,
-                        contentDescription = "Módulos",
-                        tint = EditorialTextMuted,
-                        modifier = Modifier.size(20.dp)
+                    Box(
+                        modifier = Modifier.size(width = 48.dp, height = 28.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            painter = painterResource(Res.drawable.ic_nav_modulos),
+                            contentDescription = "Módulos",
+                            tint = NezcoCreamInactive,
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
+                    Text(
+                        text = "MÓDULOS",
+                        fontSize = 9.sp,
+                        fontWeight = FontWeight.Medium,
+                        letterSpacing = 1.sp,
+                        color = NezcoCreamInactive
                     )
                 }
-                Text(
-                    text = "MÓDULOS",
-                    fontSize = 9.sp,
-                    fontWeight = FontWeight.Medium,
-                    letterSpacing = 1.sp,
-                    color = EditorialTextMuted
-                )
             }
         }
     }
@@ -187,11 +188,11 @@ fun NezcoBottomBar(
     if (showMoreSheet) {
         ModalBottomSheet(
             onDismissRequest = { showMoreSheet = false },
-            containerColor = EditorialSurface,
+            containerColor = NezcoBarDark,
             scrimColor = Color.Black.copy(alpha = 0.7f),
             dragHandle = {
                 Surface(
-                    color = EditorialBorderLight,
+                    color = NezcoCreamInactive.copy(alpha = 0.3f),
                     shape = RoundedCornerShape(2.dp),
                     modifier = Modifier
                         .padding(vertical = 12.dp)
@@ -210,10 +211,10 @@ fun NezcoBottomBar(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     modifier = Modifier.padding(bottom = 16.dp)
                 ) {
-                    Box(modifier = Modifier.size(8.dp).background(EditorialRed, CircleShape))
+                    Box(modifier = Modifier.size(8.dp).background(NezcoOrangeActive, CircleShape))
                     Text(
                         text = "MÓDULOS DEL SISTEMA NEZCO",
-                        color = EditorialTextPrimary,
+                        color = NezcoCreamInactive,
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Bold,
                         letterSpacing = 1.5.sp
@@ -237,11 +238,11 @@ fun NezcoBottomBar(
                                     showMoreSheet = false
                                 },
                             colors = CardDefaults.cardColors(
-                                containerColor = if (isSelected) EditorialSurfaceElevated else EditorialSurfaceSub
+                                containerColor = if (isSelected) Color(0xFF2A1B1C) else Color(0xFF221112)
                             ),
                             border = androidx.compose.foundation.BorderStroke(
                                 width = 1.dp,
-                                color = if (isSelected) EditorialRed else EditorialBorder
+                                color = if (isSelected) NezcoOrangeActive else Color(0xFF332223)
                             )
                         ) {
                             Row(
@@ -250,16 +251,16 @@ fun NezcoBottomBar(
                                 horizontalArrangement = Arrangement.spacedBy(10.dp)
                             ) {
                                 Surface(
-                                    color = if (isSelected) EditorialRedContainer else EditorialBg,
+                                    color = if (isSelected) NezcoOrangeActive.copy(alpha = 0.2f) else NezcoBarDark,
                                     shape = RoundedCornerShape(10.dp),
                                     modifier = Modifier.size(36.dp)
                                 ) {
                                     Box(contentAlignment = Alignment.Center) {
                                         Icon(
-                                            imageVector = item.icon,
+                                            painter = painterResource(item.iconRes),
                                             contentDescription = null,
-                                            tint = if (isSelected) EditorialRed else EditorialTextBody,
-                                            modifier = Modifier.size(18.dp)
+                                            tint = if (isSelected) NezcoOrangeActive else NezcoCreamInactive,
+                                            modifier = Modifier.size(20.dp)
                                         )
                                     }
                                 }
@@ -268,12 +269,12 @@ fun NezcoBottomBar(
                                         text = item.label,
                                         fontWeight = FontWeight.Bold,
                                         fontSize = 12.sp,
-                                        color = EditorialTextPrimary
+                                        color = NezcoCreamInactive
                                     )
                                     Text(
                                         text = item.description,
                                         fontSize = 10.sp,
-                                        color = EditorialTextMuted,
+                                        color = NezcoCreamInactive.copy(alpha = 0.7f),
                                         maxLines = 1
                                     )
                                 }

@@ -50,3 +50,9 @@ val NezcoBorder = EditorialBorder
 val NezcoTextPrimary = EditorialTextPrimary
 val NezcoTextSecondary = EditorialTextMuted
 val NezcoTextMuted = EditorialTextMuted
+
+// Nezco Brand Colors from Bottom Nav Configuration
+val NezcoBarDark = Color(0xFF1A0B0C)
+val NezcoOrangeActive = Color(0xFFFF7300)
+val NezcoCreamInactive = Color(0xFFEBE1D2)
+val NezcoBrass = Color(0xFFD4A03E)
