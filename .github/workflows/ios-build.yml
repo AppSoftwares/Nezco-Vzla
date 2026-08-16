@@ -50,14 +50,14 @@ jobs:
         run: ./gradlew clean --no-daemon
 
       - name: Build Android APK
-        run: ./gradlew :composeApp:assembleRelease --info --stacktrace --no-daemon --no-configuration-cache --console=plain -Pandroid.skip.google.services=true
+        run: ./gradlew :composeApp:assembleRelease --stacktrace --no-daemon --no-configuration-cache --console=plain -Pandroid.skip.google.services=true
         env:
-          JAVA_OPTS: "-Xmx8g -XX:MaxMetaspaceSize=1g"
+          JAVA_OPTS: "-Xmx6g"
 
       - name: Build Web (Wasm)
-        run: ./gradlew :composeApp:wasmJsBrowserDistribution --info --stacktrace --no-daemon --no-configuration-cache --console=plain -Pandroid.skip.google.services=true
+        run: ./gradlew :composeApp:wasmJsBrowserDistribution --stacktrace --no-daemon --no-configuration-cache --console=plain -Pandroid.skip.google.services=true
         env:
-          JAVA_OPTS: "-Xmx8g -XX:MaxMetaspaceSize=1g"
+          JAVA_OPTS: "-Xmx6g"
 
       - name: Build iOS App (No Sign)
         run: |
