@@ -64,6 +64,7 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+            implementation(compose.materialIconsExtended)
             
             // Multiplatform lifecycle
             implementation(libs.androidx.lifecycle.viewmodel.compose)
@@ -80,6 +81,7 @@ kotlin {
 
 compose.resources {
     publicResClass = true
+    packageOfResClass = "com.nezco.app"
 }
 
 android {
