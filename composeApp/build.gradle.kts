@@ -81,7 +81,6 @@ kotlin {
 
 compose.resources {
     publicResClass = true
-    packageOfResClass = "com.nezco.app"
 }
 
 android {
@@ -121,10 +120,6 @@ android {
         compose = true
         buildConfig = true
     }
-}
-
-googleServices {
-    missingGoogleServicesStrategy = com.google.gms.googleservices.GoogleServicesPlugin.MissingGoogleServicesStrategy.WARN
 }
 
 secrets {
