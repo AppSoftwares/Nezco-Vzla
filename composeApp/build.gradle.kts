@@ -10,7 +10,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.google.devtools.ksp)
     alias(libs.plugins.secrets)
-    alias(libs.plugins.google.services)
+    alias(libs.plugins.google.services) apply false
 }
 
 kotlin {
@@ -55,6 +55,7 @@ kotlin {
             implementation(libs.androidx.room.runtime)
             implementation(libs.androidx.room.ktx)
             implementation(libs.moshi.kotlin)
+            implementation(platform(libs.firebase.bom))
             implementation(libs.firebase.ai)
         }
         commonMain.dependencies {
@@ -122,6 +123,12 @@ android {
     }
 }
 
+// FIX 1: Aplica google-services solo si existe el archivo real o no se pidió omitirlo (CI usa -Pandroid.skip.google.services=true)
+val skipGoogleServices = project.hasProperty("android.skip.google.services")
+if (!skipGoogleServices && file("google-services.json").exists()) {
+    apply(plugin = "com.google.gms.google-services")
+}
+
 secrets {
     propertiesFileName = ".env"
     defaultPropertiesFileName = ".env.example"
@@ -133,3 +140,11 @@ dependencies {
     add("kspAndroid", libs.androidx.room.compiler)
     add("kspAndroid", libs.moshi.kotlin.codegen)
 }
+
+/**
+ * HALLAZGOS DE SEGURIDAD / ARQUITECTURA (TODOs):
+ * 1. [ALTO] signingConfig de release usa la de debug y isMinifyEnabled = false. Activar R8 y usar llaves reales en CI.
+ * 2. [ALTO] GEMINI_API_KEY expuesta en BuildConfig. Mover a un backend proxy para mayor seguridad.
+ * 3. [MEDIO] Limpiar dependencias muertas (google-services, firestore, etc.) que no se usen.
+ */
+

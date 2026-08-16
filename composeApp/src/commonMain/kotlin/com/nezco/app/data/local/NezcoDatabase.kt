@@ -8,6 +8,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+/**
+ * TODO: [MEDIO] La base de datos Room no está cifrada. Implementar SQLCipher si se guardan datos sensibles.
+ */
 @Database(
     entities = [
         ProductEntity::class,

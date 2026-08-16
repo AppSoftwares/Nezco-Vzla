@@ -49,6 +49,9 @@ jobs:
       - name: Clean
         run: ./gradlew clean --no-daemon
 
+      - name: Verify Gradle config
+        run: ./gradlew :composeApp:dependencies --configuration releaseRuntimeClasspath --no-daemon --console=plain || true
+
       - name: Build Android APK
         run: ./gradlew :composeApp:assembleRelease --stacktrace --no-daemon --no-configuration-cache --console=plain -Pandroid.skip.google.services=true
         env:
