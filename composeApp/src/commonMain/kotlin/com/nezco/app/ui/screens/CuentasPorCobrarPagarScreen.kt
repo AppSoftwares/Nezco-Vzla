@@ -263,7 +263,8 @@ fun CuentasPorCobrarPagarScreen(
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text("Cliente: ${order.clientName}", fontWeight = FontWeight.Bold, fontSize = 13.sp)
                     Text("Total Factura: ${viewModel.formatPrice(order.totalUsd)}", fontSize = 12.sp)
-                    Text("Saldo Restante: ${viewModel.formatPrice(order.totalUsd - order.paidAmountUsd)}", fontSize = 12.sp, color = NezcoSafetyRed, fontWeight = FontWeight.Bold)
+                    val remainingBalance = order.totalUsd - order.paidAmountUsd
+                    Text("Saldo Restante: ${viewModel.formatPrice(remainingBalance)}", fontSize = 12.sp, color = NezcoSafetyRed, fontWeight = FontWeight.Bold)
 
                     OutlinedTextField(
                         value = paymentAmountText,

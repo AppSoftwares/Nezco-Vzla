@@ -213,9 +213,10 @@ fun ExtintoresPrestamoScreen(
                     }
 
                     if (isExpired) {
+                        val expiredDays = -loan.daysRemaining
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            text = "⚠️ ATENCIÓN: El plazo de devolución expiró hace ${-loan.daysRemaining} días. Coordinar retiro de comodato o entrega de extintor recargado.",
+                            text = "⚠️ ATENCIÓN: El plazo de devolución expiró hace $expiredDays días. Coordinar retiro de comodato o entrega de extintor recargado.",
                             color = NezcoSafetyRed,
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Bold

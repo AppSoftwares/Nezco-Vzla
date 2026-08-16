@@ -186,7 +186,11 @@ fun DashboardScreen(
                 EditorialKpiCard(
                     modifier = Modifier.weight(1f),
                     title = "DESPACHOS",
-                    value = "${activeRoute?.completedStops ?: 0}/${activeRoute?.totalStops ?: 0}",
+                    value = let {
+                        val completed = activeRoute?.completedStops ?: 0
+                        val total = activeRoute?.totalStops ?: 0
+                        "$completed/$total"
+                    },
                     subtitle = activeRoute?.truckPlate ?: "Sin ruta activa",
                     icon = Icons.Default.LocalShipping,
                     color = EditorialBlue,

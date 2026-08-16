@@ -120,10 +120,12 @@ class NezcoViewModel(private val repository: NezcoRepository) : ViewModel() {
     fun formatPrice(amountUsd: Double): String {
         val bcvRate = systemConfig.value?.bcvRateBs ?: 68.50
         return if (_currencyMode.value == CurrencyMode.USD) {
-            "$${(amountUsd * 100).toInt() / 100.0}"
+            val roundedUsd = (amountUsd * 100).toInt() / 100.0
+            "$$roundedUsd"
         } else {
             val amountBs = amountUsd * bcvRate
-            "Bs. ${(amountBs * 100).toInt() / 100.0}"
+            val roundedBs = (amountBs * 100).toInt() / 100.0
+            "Bs. $roundedBs"
         }
     }
 
@@ -171,7 +173,8 @@ class NezcoViewModel(private val repository: NezcoRepository) : ViewModel() {
 
         val totalUsd = currentCart.sumOf { it.product.priceUsd * it.quantity }
         val itemsSummary = currentCart.joinToString(", ") { "${it.quantity}x ${it.product.name}" }
-        val orderNumber = "NEZ-${1050 + (orders.value.size + 1)}"
+        val nextOrderSeq = 1050 + orders.value.size + 1
+        val orderNumber = "NEZ-$nextOrderSeq"
         val dateIso = "2026-08-15" // Placeholder for SimpleDateFormat
 
         val newOrder = OrderEntity(
@@ -387,10 +390,12 @@ class NezcoViewModel(private val repository: NezcoRepository) : ViewModel() {
     ) {
         val dateStr = "2026-08-15"
         val targetDate = "2026-08-20"
+        val nextWorkshopSeq = 100 + workshopOrders.value.size + 1
+        val nextTagSeq = 1000 + workshopOrders.value.size + 1
 
         val newOrder = WorkshopOrderEntity(
             id = (0..1000000).random().toString(),
-            orderNumber = "TAL-2026-${100 + workshopOrders.value.size + 1}",
+            orderNumber = "TAL-2026-$nextWorkshopSeq",
             clientName = clientName.ifBlank { "Cliente Industrial" },
             clientRif = clientRif.ifBlank { "J-00000000-0" },
             extinguisherType = extinguisherType,
@@ -407,7 +412,7 @@ class NezcoViewModel(private val repository: NezcoRepository) : ViewModel() {
             receivedDate = dateStr,
             targetDeliveryDate = targetDate,
             passedHydrostaticTest = true,
-            newInspectionTagNumber = "MARB-2026-${1000 + workshopOrders.value.size + 1}"
+            newInspectionTagNumber = "MARB-2026-$nextTagSeq"
         )
 
         viewModelScope.launch {
