@@ -1,7 +1,5 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -55,7 +53,7 @@ kotlin {
             implementation(libs.androidx.room.runtime)
             implementation(libs.androidx.room.ktx)
             implementation(libs.moshi.kotlin)
-            implementation(platform(libs.firebase.bom))
+            implementation(project.dependencies.platform(libs.firebase.bom))
             implementation(libs.firebase.ai)
         }
         commonMain.dependencies {
