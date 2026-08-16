@@ -21,8 +21,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nezco.app.data.model.NezcoRole
 import com.nezco.app.ui.theme.*
-import nezco.composeapp.generated.resources.*
 import nezco.composeapp.generated.resources.Res
+import nezco.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 
@@ -93,9 +93,9 @@ fun NezcoBottomBar(
     }
 
     Surface(
-        color = NezcoBarDark,
+        color = MaterialTheme.colorScheme.surface,
         shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
-        border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFF332223)),
+        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.1f)),
         tonalElevation = 12.dp,
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -104,7 +104,8 @@ fun NezcoBottomBar(
                 painter = painterResource(Res.drawable.bg_nav_manguera),
                 contentDescription = null,
                 modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter),
-                contentScale = ContentScale.FillWidth
+                contentScale = ContentScale.FillWidth,
+                alpha = if (MaterialTheme.colorScheme.primary == NezcoOrangeActive) 0.1f else 1.0f
             )
             Row(
                 modifier = Modifier
@@ -132,13 +133,13 @@ fun NezcoBottomBar(
                                 Box(
                                     modifier = Modifier
                                         .size(width = 42.dp, height = 28.dp)
-                                        .background(NezcoOrangeActive.copy(alpha = 0.2f), RoundedCornerShape(14.dp))
+                                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.12f), RoundedCornerShape(14.dp))
                                 )
                             }
                             Icon(
                                 painter = painterResource(item.iconRes),
                                 contentDescription = item.label,
-                                tint = if (isSelected) NezcoOrangeActive else NezcoCreamInactive,
+                                tint = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                                 modifier = Modifier.size(24.dp)
                             )
                         }
@@ -148,7 +149,7 @@ fun NezcoBottomBar(
                             fontSize = 9.sp,
                             fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
                             letterSpacing = 1.sp,
-                            color = if (isSelected) NezcoOrangeActive else NezcoCreamInactive
+                            color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 }
@@ -169,7 +170,7 @@ fun NezcoBottomBar(
                         Icon(
                             painter = painterResource(Res.drawable.ic_nav_modulos),
                             contentDescription = "Módulos",
-                            tint = NezcoCreamInactive,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.size(24.dp)
                         )
                     }
@@ -178,7 +179,7 @@ fun NezcoBottomBar(
                         fontSize = 9.sp,
                         fontWeight = FontWeight.Medium,
                         letterSpacing = 1.sp,
-                        color = NezcoCreamInactive
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             }
@@ -188,11 +189,11 @@ fun NezcoBottomBar(
     if (showMoreSheet) {
         ModalBottomSheet(
             onDismissRequest = { showMoreSheet = false },
-            containerColor = NezcoBarDark,
-            scrimColor = Color.Black.copy(alpha = 0.7f),
+            containerColor = MaterialTheme.colorScheme.surface,
+            scrimColor = Color.Black.copy(alpha = 0.6f),
             dragHandle = {
                 Surface(
-                    color = NezcoCreamInactive.copy(alpha = 0.3f),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.2f),
                     shape = RoundedCornerShape(2.dp),
                     modifier = Modifier
                         .padding(vertical = 12.dp)
@@ -211,10 +212,10 @@ fun NezcoBottomBar(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     modifier = Modifier.padding(bottom = 16.dp)
                 ) {
-                    Box(modifier = Modifier.size(8.dp).background(NezcoOrangeActive, CircleShape))
+                    Box(modifier = Modifier.size(8.dp).background(MaterialTheme.colorScheme.primary, CircleShape))
                     Text(
                         text = "MÓDULOS DEL SISTEMA NEZCO",
-                        color = NezcoCreamInactive,
+                        color = MaterialTheme.colorScheme.onSurface,
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Bold,
                         letterSpacing = 1.5.sp
@@ -238,11 +239,11 @@ fun NezcoBottomBar(
                                     showMoreSheet = false
                                 },
                             colors = CardDefaults.cardColors(
-                                containerColor = if (isSelected) Color(0xFF2A1B1C) else Color(0xFF221112)
+                                containerColor = if (isSelected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f)
                             ),
                             border = androidx.compose.foundation.BorderStroke(
                                 width = 1.dp,
-                                color = if (isSelected) NezcoOrangeActive else Color(0xFF332223)
+                                color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline.copy(alpha = 0.1f)
                             )
                         ) {
                             Row(
@@ -251,7 +252,7 @@ fun NezcoBottomBar(
                                 horizontalArrangement = Arrangement.spacedBy(10.dp)
                             ) {
                                 Surface(
-                                    color = if (isSelected) NezcoOrangeActive.copy(alpha = 0.2f) else NezcoBarDark,
+                                    color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
                                     shape = RoundedCornerShape(10.dp),
                                     modifier = Modifier.size(36.dp)
                                 ) {
@@ -259,7 +260,7 @@ fun NezcoBottomBar(
                                         Icon(
                                             painter = painterResource(item.iconRes),
                                             contentDescription = null,
-                                            tint = if (isSelected) NezcoOrangeActive else NezcoCreamInactive,
+                                            tint = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary,
                                             modifier = Modifier.size(20.dp)
                                         )
                                     }
@@ -269,12 +270,12 @@ fun NezcoBottomBar(
                                         text = item.label,
                                         fontWeight = FontWeight.Bold,
                                         fontSize = 12.sp,
-                                        color = NezcoCreamInactive
+                                        color = MaterialTheme.colorScheme.onSurface
                                     )
                                     Text(
                                         text = item.description,
                                         fontSize = 10.sp,
-                                        color = NezcoCreamInactive.copy(alpha = 0.7f),
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                                         maxLines = 1
                                     )
                                 }

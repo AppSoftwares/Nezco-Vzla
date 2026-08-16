@@ -27,6 +27,9 @@ class NezcoViewModel(private val repository: NezcoRepository) : ViewModel() {
     private val _currencyMode = MutableStateFlow(CurrencyMode.USD)
     val currencyMode: StateFlow<CurrencyMode> = _currencyMode.asStateFlow()
 
+    private val _isDarkMode = MutableStateFlow(true)
+    val isDarkMode: StateFlow<Boolean> = _isDarkMode.asStateFlow()
+
     // Data Streams from Room
     val products: StateFlow<List<ProductEntity>> = repository.products
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
@@ -107,8 +110,11 @@ class NezcoViewModel(private val repository: NezcoRepository) : ViewModel() {
     }
 
     fun toggleCurrency() {
-        _currentRole // trigger read
         _currencyMode.value = if (_currencyMode.value == CurrencyMode.USD) CurrencyMode.VES else CurrencyMode.USD
+    }
+
+    fun toggleDarkMode() {
+        _isDarkMode.value = !_isDarkMode.value
     }
 
     fun formatPrice(amountUsd: Double): String {

@@ -16,7 +16,9 @@ import com.nezco.app.ui.viewmodel.provideNezcoViewModel
 @Composable
 fun App() {
     val viewModel = provideNezcoViewModel()
-    NezcoTheme {
+    val isDarkMode by viewModel.isDarkMode.collectAsStateWithLifecycle()
+    
+    NezcoTheme(darkTheme = isDarkMode) {
         NezcoApp(viewModel)
     }
 }
@@ -29,6 +31,7 @@ fun NezcoApp(
     val currentTab by viewModel.currentTab.collectAsStateWithLifecycle()
     val currencyMode by viewModel.currencyMode.collectAsStateWithLifecycle()
     val cart by viewModel.cart.collectAsStateWithLifecycle()
+    val isDarkMode by viewModel.isDarkMode.collectAsStateWithLifecycle()
     val systemConfig by viewModel.systemConfig.collectAsStateWithLifecycle()
     val snackbarMessage by viewModel.snackbarMessage.collectAsStateWithLifecycle()
 
@@ -127,7 +130,9 @@ fun NezcoApp(
         RoleSelectorDialog(
             currentRole = currentRole,
             onRoleSelected = { viewModel.setRole(it) },
-            onDismiss = { showRoleDialog = false }
+            onDismiss = { showRoleDialog = false },
+            isDarkMode = isDarkMode,
+            onThemeToggle = { viewModel.toggleDarkMode() }
         )
     }
 }

@@ -56,3 +56,11 @@ val NezcoBarDark = Color(0xFF1A0B0C)
 val NezcoOrangeActive = Color(0xFFFF7300)
 val NezcoCreamInactive = Color(0xFFEBE1D2)
 val NezcoBrass = Color(0xFFD4A03E)
+
+// Sophisticated Light Theme Palette
+val NezcoWhite = Color(0xFFFFFFFF)
+val NezcoLightBg = Color(0xFFF8F9FA)
+val NezcoLightSurface = Color(0xFFFFFFFF)
+val NezcoLightBorder = Color(0xFFE9ECEF)
+val NezcoLightTextPrimary = Color(0xFF212529)
+val NezcoLightTextSecondary = Color(0xFF6C757D)

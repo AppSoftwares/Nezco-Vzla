@@ -35,7 +35,7 @@ fun NezcoTopBar(
     onConfigClick: () -> Unit
 ) {
     Surface(
-        color = EditorialBg,
+        color = MaterialTheme.colorScheme.surface,
         modifier = Modifier.fillMaxWidth()
     ) {
         Column(
@@ -57,11 +57,11 @@ fun NezcoTopBar(
                         Box(
                             modifier = Modifier
                                 .size(6.dp)
-                                .background(EditorialRed, CircleShape)
+                                .background(MaterialTheme.colorScheme.primary, CircleShape)
                         )
                         Text(
                             text = "GRUPO NEZCO · ${currentRole.title.uppercase()}",
-                            color = EditorialRed,
+                            color = MaterialTheme.colorScheme.primary,
                             fontSize = 10.sp,
                             fontWeight = FontWeight.Bold,
                             letterSpacing = 1.8.sp
@@ -76,14 +76,14 @@ fun NezcoTopBar(
                     ) {
                         Text(
                             text = "Nezco",
-                            color = Color.White,
+                            color = MaterialTheme.colorScheme.onSurface,
                             fontSize = 24.sp,
                             fontWeight = FontWeight.Light,
                             letterSpacing = (-0.5).sp
                         )
                         Text(
                             text = "App",
-                            color = EditorialRed,
+                            color = MaterialTheme.colorScheme.primary,
                             fontSize = 24.sp,
                             fontWeight = FontWeight.Black,
                             letterSpacing = (-0.5).sp
@@ -98,9 +98,9 @@ fun NezcoTopBar(
                 ) {
                     // Currency Toggle Pill (USD / Bs. BCV)
                     Surface(
-                        color = EditorialSurface,
+                        color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.5f),
                         shape = RoundedCornerShape(20.dp),
-                        border = androidx.compose.foundation.BorderStroke(1.dp, EditorialBorder),
+                        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.2f)),
                         modifier = Modifier
                             .clip(RoundedCornerShape(20.dp))
                             .clickable { onCurrencyToggle() }
@@ -112,7 +112,7 @@ fun NezcoTopBar(
                         ) {
                             Text(
                                 text = if (currencyMode == CurrencyMode.USD) "$ USD" else "Bs. $bcvRate",
-                                color = EditorialAmber,
+                                color = if (MaterialTheme.colorScheme.primary == NezcoOrangeActive) NezcoOrangeActive else EditorialAmber,
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.Bold
                             )
@@ -125,20 +125,20 @@ fun NezcoTopBar(
                             onClick = onCartClick,
                             modifier = Modifier
                                 .size(40.dp)
-                                .background(EditorialSurface, CircleShape)
-                                .border(1.dp, EditorialBorder, CircleShape)
+                                .background(MaterialTheme.colorScheme.surfaceVariant, CircleShape)
+                                .border(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.2f), CircleShape)
                         ) {
                             BadgedBox(
                                 badge = {
-                                    Badge(containerColor = EditorialRed) {
-                                        Text("$cartItemCount", color = Color.White, fontSize = 9.sp)
+                                    Badge(containerColor = MaterialTheme.colorScheme.primary) {
+                                        Text("$cartItemCount", color = MaterialTheme.colorScheme.onPrimary, fontSize = 9.sp)
                                     }
                                 }
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.ShoppingCart,
                                     contentDescription = "Carrito",
-                                    tint = Color.White,
+                                    tint = MaterialTheme.colorScheme.onSurface,
                                     modifier = Modifier.size(18.dp)
                                 )
                             }
@@ -147,9 +147,9 @@ fun NezcoTopBar(
 
                     // Avatar Role Selector Monogram (JD / Role)
                     Surface(
-                        color = EditorialSurfaceElevated,
+                        color = MaterialTheme.colorScheme.primaryContainer,
                         shape = CircleShape,
-                        border = androidx.compose.foundation.BorderStroke(1.dp, EditorialBorderLight),
+                        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)),
                         modifier = Modifier
                             .size(44.dp)
                             .clip(CircleShape)
@@ -167,7 +167,7 @@ fun NezcoTopBar(
                                     NezcoRole.TALLER -> "TL"
                                     NezcoRole.POS_LOCAL -> "PS"
                                 },
-                                color = EditorialRed,
+                                color = MaterialTheme.colorScheme.primary,
                                 fontWeight = FontWeight.Black,
                                 fontSize = 13.sp,
                                 letterSpacing = 0.5.sp

@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 // Editorial Aesthetic Dark Color Scheme
-private val EditorialColorScheme = darkColorScheme(
+private val EditorialDarkColorScheme = darkColorScheme(
     primary = EditorialRed,
     onPrimary = Color.White,
     primaryContainer = EditorialRedContainer,
@@ -31,13 +31,37 @@ private val EditorialColorScheme = darkColorScheme(
     outlineVariant = EditorialBorderLight
 )
 
+// Sophisticated Brand Light Color Scheme
+private val NezcoLightColorScheme = lightColorScheme(
+    primary = NezcoOrangeActive,
+    onPrimary = Color.White,
+    primaryContainer = NezcoOrangeActive.copy(alpha = 0.12f),
+    onPrimaryContainer = NezcoOrangeActive,
+    secondary = NezcoBarDark,
+    onSecondary = Color.White,
+    secondaryContainer = NezcoLightBorder,
+    onSecondaryContainer = NezcoLightTextPrimary,
+    tertiary = NezcoBrass,
+    onTertiary = Color.White,
+    background = NezcoLightBg,
+    onBackground = NezcoLightTextPrimary,
+    surface = NezcoLightSurface,
+    onSurface = NezcoLightTextPrimary,
+    surfaceVariant = NezcoLightBg,
+    onSurfaceVariant = NezcoLightTextSecondary,
+    outline = NezcoLightBorder,
+    outlineVariant = NezcoLightBorder.copy(alpha = 0.5f)
+)
+
 @Composable
 fun NezcoTheme(
     darkTheme: Boolean = true,
     content: @Composable () -> Unit
 ) {
+    val colorScheme = if (darkTheme) EditorialDarkColorScheme else NezcoLightColorScheme
+    
     MaterialTheme(
-        colorScheme = EditorialColorScheme,
+        colorScheme = colorScheme,
         typography = Typography,
         content = content
     )
@@ -49,5 +73,5 @@ fun MyApplicationTheme(
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
-    NezcoTheme(content = content)
+    NezcoTheme(darkTheme = darkTheme, content = content)
 }
