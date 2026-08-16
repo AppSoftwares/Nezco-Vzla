@@ -83,11 +83,11 @@ compose.resources {
 }
 
 android {
-    namespace = "com.example"
+    namespace = "com.nezco.app"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.aistudio.nezcoextintores.wqvz"
+        applicationId = "com.nezco.app"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
