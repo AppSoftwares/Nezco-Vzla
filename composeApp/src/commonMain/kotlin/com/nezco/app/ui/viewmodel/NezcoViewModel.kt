@@ -2,7 +2,6 @@ package com.nezco.app.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.nezco.app.data.local.NezcoDatabase
 import com.nezco.app.data.model.*
 import com.nezco.app.data.repository.NezcoRepository
 import kotlinx.coroutines.flow.*
