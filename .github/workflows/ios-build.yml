@@ -22,7 +22,6 @@ jobs:
         with:
           java-version: '17'
           distribution: 'zulu'
-          cache: 'gradle'
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -56,6 +55,9 @@ jobs:
         run: ./gradlew :composeApp:assembleRelease --stacktrace --no-daemon --no-configuration-cache --console=plain -Pandroid.skip.google.services=true
         env:
           JAVA_OPTS: "-Xmx6g"
+
+      - name: Clean generated resources before Wasm build
+        run: rm -rf composeApp/build/generated/compose
 
       - name: Build Web (Wasm)
         run: ./gradlew :composeApp:wasmJsBrowserDistribution --stacktrace --no-daemon --no-configuration-cache --console=plain -Pandroid.skip.google.services=true
