@@ -1,11 +1,7 @@
 package com.nezco.app.data.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
-@Entity(tableName = "products")
 data class ProductEntity(
-    @PrimaryKey val id: String,
+    val id: String,
     val code: String,
     val name: String,
     val category: ProductCategory,
@@ -21,9 +17,8 @@ data class ProductEntity(
     val imageUrl: String = ""
 )
 
-@Entity(tableName = "orders")
 data class OrderEntity(
-    @PrimaryKey val id: String,
+    val id: String,
     val orderNumber: String,
     val clientName: String,
     val clientRif: String,
@@ -40,9 +35,8 @@ data class OrderEntity(
     val notes: String = ""
 )
 
-@Entity(tableName = "dispatch_routes")
 data class DispatchRouteEntity(
-    @PrimaryKey val id: String,
+    val id: String,
     val routeCode: String,
     val driverId: String,
     val driverName: String,
@@ -58,9 +52,8 @@ data class DispatchRouteEntity(
     val completedAt: String = ""
 )
 
-@Entity(tableName = "delivery_stops")
 data class DeliveryStopEntity(
-    @PrimaryKey val id: String,
+    val id: String,
     val routeId: String,
     val stopOrder: Int,
     val clientName: String,
@@ -80,9 +73,8 @@ data class DeliveryStopEntity(
     val notes: String = ""
 )
 
-@Entity(tableName = "extinguisher_loans")
 data class ExtinguisherLoanEntity(
-    @PrimaryKey val id: String,
+    val id: String,
     val clientName: String,
     val clientRif: String,
     val clientPhone: String,
@@ -99,9 +91,8 @@ data class ExtinguisherLoanEntity(
     val notes: String = ""
 )
 
-@Entity(tableName = "workshop_orders")
 data class WorkshopOrderEntity(
-    @PrimaryKey val id: String,
+    val id: String,
     val orderNumber: String,
     val clientName: String,
     val clientRif: String,
@@ -123,9 +114,8 @@ data class WorkshopOrderEntity(
     val newInspectionTagNumber: String = ""
 )
 
-@Entity(tableName = "route_expenses")
 data class RouteExpenseEntity(
-    @PrimaryKey val id: String,
+    val id: String,
     val routeId: String,
     val driverName: String,
     val category: ExpenseCategory,
@@ -139,9 +129,8 @@ data class RouteExpenseEntity(
     val rejectionReason: String = ""
 )
 
-@Entity(tableName = "payroll_employees")
 data class PayrollEmployeeEntity(
-    @PrimaryKey val id: String,
+    val id: String,
     val cedula: String,
     val fullName: String,
     val jobTitle: String,
@@ -158,9 +147,8 @@ data class PayrollEmployeeEntity(
     val pendingVacationDays: Int
 )
 
-@Entity(tableName = "audit_logs")
 data class AuditLogEntity(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val id: Long = 0,
     val timestamp: String,
     val userName: String,
     val role: NezcoRole,
@@ -169,9 +157,8 @@ data class AuditLogEntity(
     val details: String
 )
 
-@Entity(tableName = "system_config")
 data class SystemConfigEntity(
-    @PrimaryKey val id: Int = 1,
+    val id: Int = 1,
     val bcvRateBs: Double = 68.50,
     val companyName: String = "Grupo Nezco Venezuela, C.A.",
     val companyRif: String = "J-40982341-2",
