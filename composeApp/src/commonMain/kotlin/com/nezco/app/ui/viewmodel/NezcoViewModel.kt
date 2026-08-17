@@ -173,7 +173,7 @@ class NezcoViewModel(private val repository: NezcoRepository) : ViewModel() {
         val totalUsd = currentCart.sumOf { it.product.priceUsd * it.quantity }
         val itemsSummary = currentCart.joinToString(", ") { "${it.quantity}x ${it.product.name}" }
         val currentOrdersCount = orders.value.size
-        val nextOrderSeq = 1050 + currentOrdersCount + 1
+        val nextOrderSeq = currentOrdersCount + 1050 + 1
         val orderNumber = "NEZ-$nextOrderSeq"
         val dateIso = "2026-08-15" // Placeholder for SimpleDateFormat
 
@@ -390,8 +390,8 @@ class NezcoViewModel(private val repository: NezcoRepository) : ViewModel() {
     ) {
         val dateStr = "2026-08-15"
         val targetDate = "2026-08-20"
-        val nextWorkshopSeq = 100 + workshopOrders.value.size + 1
-        val nextTagSeq = 1000 + workshopOrders.value.size + 1
+        val nextWorkshopSeq = workshopOrders.value.size + 100 + 1
+        val nextTagSeq = workshopOrders.value.size + 1000 + 1
 
         val newOrder = WorkshopOrderEntity(
             id = (0..1000000).random().toString(),
