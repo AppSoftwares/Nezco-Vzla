@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlin.random.Random
 import com.nezco.app.data.model.*
 import com.nezco.app.ui.theme.*
 import com.nezco.app.ui.viewmodel.NezcoViewModel
@@ -415,7 +416,7 @@ fun NewWorkshopOrderDialog(
                         clientRif.ifBlank { "J-00000000-0" },
                         extinguisherType,
                         capacity,
-                        serialNumber.ifBlank { "SER-${System.currentTimeMillis().toString().takeLast(5)}" },
+                        serialNumber.ifBlank { "SER-${Random.nextInt(100000, 999999)}" }, // TODO: reemplazar por generador de ID único antes de producción con persistencia real
                         year,
                         serviceType
                     )

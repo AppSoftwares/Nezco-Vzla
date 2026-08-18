@@ -314,13 +314,13 @@ fun NominaLotttScreen(
                     Text("NETO A PAGAR:", fontWeight = FontWeight.Bold, fontSize = 12.sp, color = EditorialTextPrimary, letterSpacing = 1.sp)
                     Column(horizontalAlignment = Alignment.End) {
                         Text(
-                            text = String.format(java.util.Locale.US, "$%.2f USD", netPayUsd),
+                            text = "$${netPayUsd.formatTo2Decimals()} USD",
                             fontWeight = FontWeight.Bold,
                             fontSize = 16.sp,
                             color = EditorialTextPrimary
                         )
                         Text(
-                            text = String.format(java.util.Locale.US, "Bs. %.2f (BCV %.2f)", netPayUsd * bcvRate, bcvRate),
+                            text = "Bs. ${(netPayUsd * bcvRate).formatTo2Decimals()} (BCV ${bcvRate.formatTo2Decimals()})",
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Bold,
                             color = EditorialAmber
@@ -412,4 +412,12 @@ fun NominaLotttScreen(
             }
         )
     }
+}
+
+private fun Double.formatTo2Decimals(): String {
+    val rounded = kotlin.math.round(this * 100) / 100.0
+    val intPart = rounded.toLong()
+    val decimalDigits = kotlin.math.abs(((rounded - intPart) * 100).toInt())
+    val decimalStr = decimalDigits.toString().padStart(2, '0')
+    return "$intPart.$decimalStr"
 }
