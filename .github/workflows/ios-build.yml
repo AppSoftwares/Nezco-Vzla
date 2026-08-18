@@ -107,6 +107,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Prepare Vercel Deployment
+        run: cp vercel.json composeApp/build/dist/wasmJs/productionExecutable/
+
       - name: Deploy to Vercel (Production)
         uses: amondnet/vercel-action@v20
         with:
