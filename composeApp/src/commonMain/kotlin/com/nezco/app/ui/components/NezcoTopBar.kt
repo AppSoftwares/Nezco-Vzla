@@ -112,7 +112,7 @@ fun NezcoTopBar(
                         ) {
                             Text(
                                 text = if (currencyMode == CurrencyMode.USD) "$ USD" else "Bs. $bcvRate",
-                                color = if (MaterialTheme.colorScheme.primary == NezcoOrangeActive) NezcoOrangeActive else EditorialAmber,
+                                color = MaterialTheme.colorScheme.primary,
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.Bold
                             )

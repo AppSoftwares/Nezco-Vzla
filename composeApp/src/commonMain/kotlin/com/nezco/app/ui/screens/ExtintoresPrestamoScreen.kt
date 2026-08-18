@@ -45,7 +45,7 @@ fun ExtintoresPrestamoScreen(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = NezcoNavy)
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(
@@ -55,7 +55,7 @@ fun ExtintoresPrestamoScreen(
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             Surface(
-                                color = NezcoAmberGold,
+                                color = MaterialTheme.colorScheme.tertiary,
                                 shape = RoundedCornerShape(8.dp),
                                 modifier = Modifier.size(36.dp)
                             ) {
@@ -63,7 +63,7 @@ fun ExtintoresPrestamoScreen(
                                     Icon(
                                         imageVector = Icons.Default.SwapHoriz,
                                         contentDescription = null,
-                                        tint = NezcoNavyDark,
+                                        tint = MaterialTheme.colorScheme.onTertiary,
                                         modifier = Modifier.size(22.dp)
                                     )
                                 }
@@ -71,25 +71,25 @@ fun ExtintoresPrestamoScreen(
                             Column {
                                 Text(
                                     text = "Extintores en Préstamo (Comodato)",
-                                    color = Color.White,
+                                    color = MaterialTheme.colorScheme.onPrimaryContainer,
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 15.sp
                                 )
                                 Text(
                                     text = "Rastreo y alertas de cilindros prestados",
-                                    color = Color.White.copy(alpha = 0.8f),
+                                    color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f),
                                     fontSize = 11.sp
                                 )
                             }
                         }
                         if (expiredLoans.isNotEmpty()) {
                             Surface(
-                                color = NezcoSafetyRed,
+                                color = MaterialTheme.colorScheme.primary,
                                 shape = RoundedCornerShape(6.dp)
                             ) {
                                 Text(
                                     text = "¡${expiredLoans.size} Vencidos!",
-                                    color = Color.White,
+                                    color = MaterialTheme.colorScheme.onPrimary,
                                     fontSize = 10.sp,
                                     fontWeight = FontWeight.Bold,
                                     modifier = Modifier.padding(horizontal = 6.dp, vertical = 3.dp)
@@ -105,12 +105,12 @@ fun ExtintoresPrestamoScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Column {
-                            Text("Total Préstamos Activos", color = Color.White.copy(alpha = 0.7f), fontSize = 10.sp)
-                            Text("${activeLoans.size} Extintores", color = Color.White, fontWeight = FontWeight.Black, fontSize = 16.sp)
+                            Text("Total Préstamos Activos", color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f), fontSize = 10.sp)
+                            Text("${activeLoans.size} Extintores", color = MaterialTheme.colorScheme.onPrimaryContainer, fontWeight = FontWeight.Black, fontSize = 16.sp)
                         }
                         Column(horizontalAlignment = Alignment.End) {
-                            Text("Retornados a Almacén", color = Color.White.copy(alpha = 0.7f), fontSize = 10.sp)
-                            Text("${loans.count { it.status == LoanStatus.DEVUELTO_A_ALMACEN }} Devueltos", color = NezcoGreen, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                            Text("Retornados a Almacén", color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f), fontSize = 10.sp)
+                            Text("${loans.count { it.status == LoanStatus.DEVUELTO_A_ALMACEN }} Devueltos", color = EditorialGreen, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                         }
                     }
                 }
@@ -136,11 +136,11 @@ fun ExtintoresPrestamoScreen(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(14.dp),
                 colors = CardDefaults.cardColors(
-                    containerColor = if (isExpired) NezcoSafetyRedContainer else if (isReturned) MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f) else MaterialTheme.colorScheme.surface
+                    containerColor = if (isExpired) MaterialTheme.colorScheme.primaryContainer else if (isReturned) MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f) else MaterialTheme.colorScheme.surface
                 ),
                 border = androidx.compose.foundation.BorderStroke(
                     width = 1.dp,
-                    color = if (isExpired) NezcoSafetyRed else MaterialTheme.colorScheme.outline.copy(alpha = 0.4f)
+                    color = if (isExpired) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline.copy(alpha = 0.4f)
                 )
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
@@ -193,14 +193,14 @@ fun ExtintoresPrestamoScreen(
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
                                 Text("🔁 Extintor Cedido Nezco:", fontSize = 11.sp, fontWeight = FontWeight.Bold)
-                                Text(loan.loanExtinguisherCode, fontSize = 11.sp, fontWeight = FontWeight.Bold, color = NezcoNavy)
+                                Text(loan.loanExtinguisherCode, fontSize = 11.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
                             }
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
                                 Text("📥 Extintor Cliente Retirado:", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                                Text(loan.clientOriginalExtinguisherCode, fontSize = 11.sp, color = NezcoSafetyRed, fontWeight = FontWeight.SemiBold)
+                                Text(loan.clientOriginalExtinguisherCode, fontSize = 11.sp, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.SemiBold)
                             }
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
@@ -217,7 +217,7 @@ fun ExtintoresPrestamoScreen(
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
                             text = "⚠️ ATENCIÓN: El plazo de devolución expiró hace $expiredDays días. Coordinar retiro de comodato o entrega de extintor recargado.",
-                            color = NezcoSafetyRed,
+                            color = MaterialTheme.colorScheme.primary,
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Bold
                         )
@@ -230,7 +230,7 @@ fun ExtintoresPrestamoScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(42.dp),
-                            colors = ButtonDefaults.buttonColors(containerColor = NezcoGreen),
+                            colors = ButtonDefaults.buttonColors(containerColor = EditorialGreen),
                             shape = RoundedCornerShape(8.dp)
                         ) {
                             Icon(imageVector = Icons.Default.Check, contentDescription = null, modifier = Modifier.size(16.dp))

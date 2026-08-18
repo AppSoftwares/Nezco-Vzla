@@ -45,18 +45,18 @@ fun AlmacenInventarioScreen(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFF134E4A))
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
                         text = "Inventario Multicentral Nezco",
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer,
                         fontWeight = FontWeight.Bold,
                         fontSize = 15.sp
                     )
                     Text(
                         text = "Almacén Principal • Taller Central • Camión Despacho",
-                        color = Color.White.copy(alpha = 0.8f),
+                        color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f),
                         fontSize = 11.sp
                     )
 
@@ -67,16 +67,16 @@ fun AlmacenInventarioScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Column {
-                            Text("Almacén Principal", color = Color.White.copy(alpha = 0.7f), fontSize = 10.sp)
-                            Text("$totalStockPrincipal un.", color = Color.White, fontWeight = FontWeight.Black, fontSize = 16.sp)
+                            Text("Almacén Principal", color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f), fontSize = 10.sp)
+                            Text("$totalStockPrincipal un.", color = MaterialTheme.colorScheme.onPrimaryContainer, fontWeight = FontWeight.Black, fontSize = 16.sp)
                         }
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text("Taller Central", color = Color.White.copy(alpha = 0.7f), fontSize = 10.sp)
-                            Text("$totalStockTaller un.", color = NezcoAmberGold, fontWeight = FontWeight.Black, fontSize = 16.sp)
+                            Text("Taller Central", color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f), fontSize = 10.sp)
+                            Text("$totalStockTaller un.", color = MaterialTheme.colorScheme.tertiary, fontWeight = FontWeight.Black, fontSize = 16.sp)
                         }
                         Column(horizontalAlignment = Alignment.End) {
-                            Text("Móvil Camión 01", color = Color.White.copy(alpha = 0.7f), fontSize = 10.sp)
-                            Text("$totalStockCamion un.", color = Color(0xFF67E8F9), fontWeight = FontWeight.Black, fontSize = 16.sp)
+                            Text("Móvil Camión 01", color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f), fontSize = 10.sp)
+                            Text("$totalStockCamion un.", color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.Black, fontSize = 16.sp)
                         }
                     }
                 }
@@ -107,7 +107,7 @@ fun AlmacenInventarioScreen(
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                 border = androidx.compose.foundation.BorderStroke(
                     width = 1.dp,
-                    color = if (isLowStock) NezcoAmber else MaterialTheme.colorScheme.outline.copy(alpha = 0.4f)
+                    color = if (isLowStock) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.outline.copy(alpha = 0.4f)
                 )
             ) {
                 Column(modifier = Modifier.padding(14.dp)) {
@@ -131,12 +131,12 @@ fun AlmacenInventarioScreen(
                         }
                         if (isLowStock) {
                             Surface(
-                                color = NezcoAmberContainer,
+                                color = MaterialTheme.colorScheme.tertiaryContainer,
                                 shape = RoundedCornerShape(4.dp)
                             ) {
                                 Text(
                                     text = "¡STOCK BAJO!",
-                                    color = NezcoAmber,
+                                    color = MaterialTheme.colorScheme.tertiary,
                                     fontSize = 9.sp,
                                     fontWeight = FontWeight.Bold,
                                     modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
@@ -231,7 +231,7 @@ fun StockAdjustmentDialog(
                     text = product.name,
                     fontWeight = FontWeight.Bold,
                     fontSize = 13.sp,
-                    color = NezcoNavy
+                    color = MaterialTheme.colorScheme.primary
                 )
                 Text("Ingresa las nuevas cantidades disponibles por ubicación:", fontSize = 11.sp)
 
@@ -268,7 +268,7 @@ fun StockAdjustmentDialog(
                     val c = camionText.toIntOrNull() ?: product.stockCamion
                     onConfirm(p, t, c)
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF134E4A))
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
             ) {
                 Text("GUARDAR CAMBIOS", fontWeight = FontWeight.Bold)
             }

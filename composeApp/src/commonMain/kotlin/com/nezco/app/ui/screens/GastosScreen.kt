@@ -35,11 +35,11 @@ fun GastosScreen(
     val isSuperOrAdmin = currentRole == NezcoRole.SUPER_ADMIN || currentRole == NezcoRole.ADMIN
 
     Scaffold(
-        containerColor = EditorialBg,
+        containerColor = MaterialTheme.colorScheme.background,
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { showNewExpenseDialog = true },
-                containerColor = EditorialRed,
+                containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = Color.White,
                 shape = RoundedCornerShape(18.dp)
             ) {
@@ -67,8 +67,8 @@ fun GastosScreen(
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(28.dp),
-                    colors = CardDefaults.cardColors(containerColor = EditorialSurface),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, EditorialBorder)
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
                 ) {
                     Column(modifier = Modifier.padding(20.dp)) {
                         Row(
@@ -79,7 +79,7 @@ fun GastosScreen(
                             Column {
                                 Text(
                                     text = "CONTROL DE GASTOS · FLOTA",
-                                    color = EditorialRed,
+                                    color = MaterialTheme.colorScheme.primary,
                                     fontSize = 10.sp,
                                     fontWeight = FontWeight.Bold,
                                     letterSpacing = 1.6.sp
@@ -87,18 +87,18 @@ fun GastosScreen(
                                 Spacer(modifier = Modifier.height(2.dp))
                                 Text(
                                     text = "Gastos de Ruta y Viáticos",
-                                    color = EditorialTextPrimary,
+                                    color = MaterialTheme.colorScheme.onSurface,
                                     fontSize = 18.sp,
                                     fontWeight = FontWeight.Medium
                                 )
                             }
                             Surface(
-                                color = EditorialSurfaceElevated,
+                                color = MaterialTheme.colorScheme.secondaryContainer,
                                 shape = RoundedCornerShape(12.dp)
                             ) {
                                 Text(
                                     text = "${expenses.size} REGISTROS",
-                                    color = EditorialTextMuted,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                                     fontSize = 9.sp,
                                     fontWeight = FontWeight.Bold,
                                     letterSpacing = 0.5.sp,
@@ -108,7 +108,7 @@ fun GastosScreen(
                         }
 
                         Spacer(modifier = Modifier.height(16.dp))
-                        Divider(color = EditorialBorderLight)
+                        Divider(color = MaterialTheme.colorScheme.outlineVariant)
                         Spacer(modifier = Modifier.height(14.dp))
 
                         Row(
@@ -116,11 +116,11 @@ fun GastosScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Column {
-                                Text("TOTAL GASTOS EN RUTA", color = EditorialTextMuted, fontSize = 10.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.2.sp)
-                                Text(viewModel.formatPrice(totalExpensesUsd), color = EditorialTextPrimary, fontWeight = FontWeight.Light, fontSize = 24.sp)
+                                Text("TOTAL GASTOS EN RUTA", color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f), fontSize = 10.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.2.sp)
+                                Text(viewModel.formatPrice(totalExpensesUsd), color = MaterialTheme.colorScheme.onSurface, fontWeight = FontWeight.Light, fontSize = 24.sp)
                             }
                             Column(horizontalAlignment = Alignment.End) {
-                                Text("APROBADOS", color = EditorialTextMuted, fontSize = 10.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.2.sp)
+                                Text("APROBADOS", color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f), fontSize = 10.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.2.sp)
                                 Text(
                                     "${expenses.count { it.status == ExpenseStatus.APROBADO }} de ${expenses.size}",
                                     color = EditorialGreen,
@@ -138,7 +138,7 @@ fun GastosScreen(
                 Text(
                     text = "HISTORIAL DE COMPROBANTES",
                     style = MaterialTheme.typography.labelSmall.copy(
-                        color = EditorialTextMuted,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                         letterSpacing = 1.6.sp
                     )
                 )
@@ -148,8 +148,8 @@ fun GastosScreen(
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(20.dp),
-                    colors = CardDefaults.cardColors(containerColor = EditorialSurface),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, EditorialBorder)
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Row(
@@ -160,9 +160,9 @@ fun GastosScreen(
                             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                                 Surface(
                                     color = when (expense.category) {
-                                        ExpenseCategory.COMBUSTIBLE -> EditorialRedContainer
+                                        ExpenseCategory.COMBUSTIBLE -> MaterialTheme.colorScheme.primaryContainer
                                         ExpenseCategory.PEAJES -> EditorialBlueContainer
-                                        ExpenseCategory.REPARACION_MECANICA -> EditorialAmberContainer
+                                        ExpenseCategory.REPARACION_MECANICA -> MaterialTheme.colorScheme.tertiaryContainer
                                         else -> EditorialGreenContainer
                                     },
                                     shape = RoundedCornerShape(10.dp),
@@ -178,9 +178,9 @@ fun GastosScreen(
                                             },
                                             contentDescription = null,
                                             tint = when (expense.category) {
-                                                ExpenseCategory.COMBUSTIBLE -> EditorialRed
+                                                ExpenseCategory.COMBUSTIBLE -> MaterialTheme.colorScheme.primary
                                                 ExpenseCategory.PEAJES -> EditorialBlue
-                                                ExpenseCategory.REPARACION_MECANICA -> EditorialAmber
+                                                ExpenseCategory.REPARACION_MECANICA -> MaterialTheme.colorScheme.tertiary
                                                 else -> EditorialGreen
                                             },
                                             modifier = Modifier.size(18.dp)
@@ -193,12 +193,12 @@ fun GastosScreen(
                                         text = expense.category.label,
                                         fontWeight = FontWeight.Medium,
                                         fontSize = 13.sp,
-                                        color = EditorialTextPrimary
+                                        color = MaterialTheme.colorScheme.onSurface
                                     )
                                     Text(
                                         text = "${expense.driverName} · ${expense.date}",
                                         fontSize = 10.sp,
-                                        color = EditorialTextMuted
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
                                     )
                                 }
                             }
@@ -208,13 +208,13 @@ fun GastosScreen(
                                     text = viewModel.formatPrice(expense.amountUsd),
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 15.sp,
-                                    color = EditorialTextPrimary
+                                    color = MaterialTheme.colorScheme.onSurface
                                 )
                                 Surface(
                                     color = when (expense.status) {
                                         ExpenseStatus.APROBADO -> EditorialGreenContainer
-                                        ExpenseStatus.PENDIENTE_APROBACION -> EditorialAmberContainer
-                                        else -> EditorialRedContainer
+                                        ExpenseStatus.PENDIENTE_APROBACION -> MaterialTheme.colorScheme.tertiaryContainer
+                                        else -> MaterialTheme.colorScheme.primaryContainer
                                     },
                                     shape = RoundedCornerShape(6.dp)
                                 ) {
@@ -222,8 +222,8 @@ fun GastosScreen(
                                         text = expense.status.label.uppercase(),
                                         color = when (expense.status) {
                                             ExpenseStatus.APROBADO -> EditorialGreen
-                                            ExpenseStatus.PENDIENTE_APROBACION -> EditorialAmber
-                                            else -> EditorialRed
+                                            ExpenseStatus.PENDIENTE_APROBACION -> MaterialTheme.colorScheme.tertiary
+                                            else -> MaterialTheme.colorScheme.primary
                                         },
                                         fontSize = 9.sp,
                                         fontWeight = FontWeight.Bold,
@@ -237,14 +237,14 @@ fun GastosScreen(
                         Spacer(modifier = Modifier.height(10.dp))
 
                         Surface(
-                            color = EditorialSurfaceSub,
+                            color = MaterialTheme.colorScheme.surfaceVariant,
                             shape = RoundedCornerShape(10.dp),
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Text(
                                 text = expense.description,
                                 fontSize = 11.sp,
-                                color = EditorialTextBody,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 modifier = Modifier.padding(10.dp)
                             )
                         }
@@ -252,8 +252,8 @@ fun GastosScreen(
                         if (expense.receiptPhotoAttached) {
                             Spacer(modifier = Modifier.height(8.dp))
                             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                                Icon(imageVector = Icons.Default.Attachment, contentDescription = null, tint = EditorialRed, modifier = Modifier.size(12.dp))
-                                Text("Comprobante / Ticket de pago digitalizado", fontSize = 10.sp, color = EditorialTextMuted)
+                                Icon(imageVector = Icons.Default.Attachment, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(12.dp))
+                                Text("Comprobante / Ticket de pago digitalizado", fontSize = 10.sp, color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f))
                             }
                         }
 
@@ -267,8 +267,8 @@ fun GastosScreen(
                                 OutlinedButton(
                                     onClick = { viewModel.approveExpense(expense, false) },
                                     modifier = Modifier.weight(1f),
-                                    colors = ButtonDefaults.outlinedButtonColors(contentColor = EditorialRed),
-                                    border = androidx.compose.foundation.BorderStroke(1.dp, EditorialRed),
+                                    colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.primary),
+                                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
                                     shape = RoundedCornerShape(12.dp)
                                 ) {
                                     Text("RECHAZAR", fontSize = 10.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.sp)

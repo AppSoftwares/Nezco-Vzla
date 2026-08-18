@@ -35,22 +35,22 @@ private val EditorialDarkColorScheme = darkColorScheme(
 private val NezcoLightColorScheme = lightColorScheme(
     primary = NezcoOrangeActive,
     onPrimary = Color.White,
-    primaryContainer = NezcoOrangeActive.copy(alpha = 0.12f),
-    onPrimaryContainer = NezcoOrangeActive,
+    primaryContainer = NezcoOrangeActive.copy(alpha = 0.15f),
+    onPrimaryContainer = Color(0xFF9F4500), // Darker orange for text
     secondary = NezcoBarDark,
     onSecondary = Color.White,
-    secondaryContainer = NezcoLightBorder,
-    onSecondaryContainer = NezcoLightTextPrimary,
+    secondaryContainer = Color(0xFFE2E2E6),
+    onSecondaryContainer = Color(0xFF1A1C1E),
     tertiary = NezcoBrass,
     onTertiary = Color.White,
-    background = NezcoLightBg,
-    onBackground = NezcoLightTextPrimary,
-    surface = NezcoLightSurface,
-    onSurface = NezcoLightTextPrimary,
-    surfaceVariant = NezcoLightBg,
-    onSurfaceVariant = NezcoLightTextSecondary,
-    outline = NezcoLightBorder,
-    outlineVariant = NezcoLightBorder.copy(alpha = 0.5f)
+    background = Color(0xFFF0F2F5), // Slightly darker background for depth
+    onBackground = Color(0xFF1A1C1E),
+    surface = Color.White,
+    onSurface = Color(0xFF1A1C1E),
+    surfaceVariant = Color(0xFFE9ECEF),
+    onSurfaceVariant = Color(0xFF495057), // Darker gray for better readability
+    outline = Color(0xFFCED4DA), // Darker border for better distinction
+    outlineVariant = Color(0xFFDEE2E6)
 )
 
 @Composable

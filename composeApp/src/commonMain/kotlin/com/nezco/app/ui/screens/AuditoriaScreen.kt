@@ -40,7 +40,7 @@ fun AuditoriaScreen(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = NezcoNavy)
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(
@@ -51,23 +51,23 @@ fun AuditoriaScreen(
                         Column {
                             Text(
                                 text = "Pista de Auditoría & Trazabilidad",
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onPrimaryContainer,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 15.sp
                             )
                             Text(
                                 text = "Registro inmutable de operaciones del sistema Nezco",
-                                color = Color.White.copy(alpha = 0.8f),
+                                color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f),
                                 fontSize = 11.sp
                             )
                         }
                         Surface(
-                            color = NezcoSafetyRed,
+                            color = MaterialTheme.colorScheme.primary,
                             shape = RoundedCornerShape(6.dp)
                         ) {
                             Text(
                                 text = "${logs.size} Eventos",
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onPrimary,
                                 fontSize = 10.sp,
                                 fontWeight = FontWeight.Bold,
                                 modifier = Modifier.padding(horizontal = 6.dp, vertical = 3.dp)
@@ -92,8 +92,8 @@ fun AuditoriaScreen(
         // Event List
         items(logs) { log ->
             val roleColor = when (log.role) {
-                NezcoRole.SUPER_ADMIN -> NezcoSafetyRed
-                NezcoRole.ADMIN -> NezcoAmber
+                NezcoRole.SUPER_ADMIN -> MaterialTheme.colorScheme.primary
+                NezcoRole.ADMIN -> MaterialTheme.colorScheme.tertiary
                 NezcoRole.CHOFER -> Color(0xFF38BDF8)
                 NezcoRole.DESPACHADOR -> Color(0xFF34D399)
                 NezcoRole.VENTA -> Color(0xFFA78BFA)
@@ -169,7 +169,7 @@ fun AuditoriaScreen(
                             text = "[${log.module}] ${log.action}",
                             fontWeight = FontWeight.Bold,
                             fontSize = 11.sp,
-                            color = NezcoNavyLight
+                            color = MaterialTheme.colorScheme.primary
                         )
 
                         Text(

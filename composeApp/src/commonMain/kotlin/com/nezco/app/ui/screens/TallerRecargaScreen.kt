@@ -42,8 +42,8 @@ fun TallerRecargaScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { showNewOrderDialog = true },
-                containerColor = NezcoNavy,
-                contentColor = Color.White
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary
             ) {
                 Row(
                     modifier = Modifier.padding(horizontal = 14.dp),
@@ -69,7 +69,7 @@ fun TallerRecargaScreen(
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF0F172A))
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background)
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Row(
@@ -80,23 +80,23 @@ fun TallerRecargaScreen(
                             Column {
                                 Text(
                                     text = "Taller Central de Recarga & Mantenimiento",
-                                    color = Color.White,
+                                    color = MaterialTheme.colorScheme.onBackground,
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 15.sp
                                 )
                                 Text(
                                     text = "Normas COVENIN 1040 (PQS) • 1114 (CO2) • 751",
-                                    color = Color.White.copy(alpha = 0.7f),
+                                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
                                     fontSize = 11.sp
                                 )
                             }
                             Surface(
-                                color = Color(0xFFEA580C),
+                                color = MaterialTheme.colorScheme.primary,
                                 shape = RoundedCornerShape(8.dp)
                             ) {
                                 Text(
                                     text = "${workshopOrders.size} Órdenes",
-                                    color = Color.White,
+                                    color = MaterialTheme.colorScheme.onPrimary,
                                     fontSize = 11.sp,
                                     fontWeight = FontWeight.Bold,
                                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
@@ -226,7 +226,7 @@ fun WorkshopOrderCard(
             Text(
                 text = "Serial: ${order.serialNumber} • Cilindro Año: ${order.cylinderYear} • Norma: ${order.coveninStandard}",
                 fontSize = 11.sp,
-                color = NezcoNavyLight
+                color = MaterialTheme.colorScheme.primary
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -289,13 +289,13 @@ fun WorkshopOrderCard(
             ) {
                 Column {
                     Text("Costo Servicio:", fontSize = 10.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    Text(formattedCost, fontWeight = FontWeight.Bold, fontSize = 14.sp, color = NezcoNavy)
+                    Text(formattedCost, fontWeight = FontWeight.Bold, fontSize = 14.sp, color = MaterialTheme.colorScheme.primary)
                 }
 
                 if (order.stage != WorkshopStage.ENTREGADO_CLIENTE) {
                     Button(
                         onClick = onAdvanceStage,
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFEA580C)),
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                         shape = RoundedCornerShape(8.dp)
                     ) {
                         Icon(imageVector = Icons.Default.FastForward, contentDescription = null, modifier = Modifier.size(16.dp))

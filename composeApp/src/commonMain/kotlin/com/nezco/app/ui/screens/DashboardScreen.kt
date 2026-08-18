@@ -58,8 +58,8 @@ fun DashboardScreen(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(32.dp),
-                colors = CardDefaults.cardColors(containerColor = EditorialSurface),
-                border = androidx.compose.foundation.BorderStroke(1.dp, EditorialBorder)
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
             ) {
                 Column(modifier = Modifier.padding(22.dp)) {
                     Row(
@@ -70,7 +70,7 @@ fun DashboardScreen(
                         Column {
                             Text(
                                 text = "OPERACIONES · VENEZUELA",
-                                color = EditorialRed,
+                                color = MaterialTheme.colorScheme.primary,
                                 fontSize = 10.sp,
                                 fontWeight = FontWeight.Bold,
                                 letterSpacing = 1.8.sp
@@ -78,14 +78,14 @@ fun DashboardScreen(
                             Spacer(modifier = Modifier.height(2.dp))
                             Text(
                                 text = "Panel de Control",
-                                color = EditorialTextPrimary,
+                                color = MaterialTheme.colorScheme.onSurface,
                                 fontSize = 22.sp,
                                 fontWeight = FontWeight.Light,
                                 letterSpacing = (-0.5).sp
                             )
                         }
                         Surface(
-                            color = EditorialRed,
+                            color = MaterialTheme.colorScheme.primary,
                             shape = RoundedCornerShape(20.dp)
                         ) {
                             Text(
@@ -100,7 +100,7 @@ fun DashboardScreen(
                     }
 
                     Spacer(modifier = Modifier.height(20.dp))
-                    Divider(color = EditorialBorderLight)
+                    Divider(color = MaterialTheme.colorScheme.outlineVariant)
                     Spacer(modifier = Modifier.height(18.dp))
 
                     Row(
@@ -110,14 +110,14 @@ fun DashboardScreen(
                         Column {
                             Text(
                                 text = "VENTAS REGISTRADAS",
-                                color = EditorialTextMuted,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                                 fontSize = 10.sp,
                                 fontWeight = FontWeight.Bold,
                                 letterSpacing = 1.4.sp
                             )
                             Text(
                                 text = viewModel.formatPrice(totalSalesUsd),
-                                color = EditorialTextPrimary,
+                                color = MaterialTheme.colorScheme.onSurface,
                                 fontWeight = FontWeight.Light,
                                 fontSize = 26.sp
                             )
@@ -125,14 +125,14 @@ fun DashboardScreen(
                         Column(horizontalAlignment = Alignment.End) {
                             Text(
                                 text = "TASA BCV",
-                                color = EditorialTextMuted,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                                 fontSize = 10.sp,
                                 fontWeight = FontWeight.Bold,
                                 letterSpacing = 1.4.sp
                             )
                             Text(
                                 text = "Bs. ${systemConfig?.bcvRateBs ?: 68.50}",
-                                color = EditorialAmber,
+                                color = MaterialTheme.colorScheme.tertiary,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 16.sp
                             )
@@ -154,7 +154,7 @@ fun DashboardScreen(
                     value = "$activeWorkshopCount",
                     subtitle = "Extintores en proceso",
                     icon = Icons.Default.Build,
-                    color = EditorialRed,
+                    color = MaterialTheme.colorScheme.primary,
                     onClick = { onNavigate("taller") }
                 )
                 EditorialKpiCard(
@@ -163,7 +163,7 @@ fun DashboardScreen(
                     value = "${loans.size}",
                     subtitle = if (expiredLoansCount > 0) "¡$expiredLoansCount Vencidos!" else "Al día",
                     icon = Icons.Default.SwapHoriz,
-                    color = if (expiredLoansCount > 0) EditorialRed else EditorialGreen,
+                    color = if (expiredLoansCount > 0) MaterialTheme.colorScheme.primary else EditorialGreen,
                     onClick = { onNavigate("prestamos") }
                 )
             }
@@ -180,7 +180,7 @@ fun DashboardScreen(
                     value = "$lowStockCount",
                     subtitle = if (lowStockCount > 0) "Mínimo alcanzado" else "Stock óptimo",
                     icon = Icons.Default.WarningAmber,
-                    color = if (lowStockCount > 0) EditorialAmber else EditorialGreen,
+                    color = if (lowStockCount > 0) MaterialTheme.colorScheme.tertiary else EditorialGreen,
                     onClick = { onNavigate("almacen") }
                 )
                 EditorialKpiCard(
@@ -204,7 +204,7 @@ fun DashboardScreen(
             Text(
                 text = "ACCIONES RÁPIDAS",
                 style = MaterialTheme.typography.labelSmall.copy(
-                    color = EditorialTextMuted,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                     letterSpacing = 1.8.sp
                 ),
                 modifier = Modifier.padding(top = 8.dp)
@@ -260,12 +260,12 @@ fun DashboardScreen(
                 Text(
                     text = "ÚLTIMOS PEDIDOS Y FACTURAS",
                     style = MaterialTheme.typography.labelSmall.copy(
-                        color = EditorialTextMuted,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                         letterSpacing = 1.8.sp
                     )
                 )
                 TextButton(onClick = { onNavigate("catalogo") }) {
-                    Text("VER TODOS", color = EditorialRed, fontSize = 10.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.sp)
+                    Text("VER TODOS", color = MaterialTheme.colorScheme.primary, fontSize = 10.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.sp)
                 }
             }
         }
@@ -274,8 +274,8 @@ fun DashboardScreen(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(containerColor = EditorialSurface),
-                border = androidx.compose.foundation.BorderStroke(1.dp, EditorialBorder)
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
             ) {
                 Row(
                     modifier = Modifier
@@ -287,12 +287,12 @@ fun DashboardScreen(
                     Column(modifier = Modifier.weight(1f)) {
                         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                             Surface(
-                                color = EditorialSurfaceElevated,
+                                color = MaterialTheme.colorScheme.secondaryContainer,
                                 shape = RoundedCornerShape(6.dp)
                             ) {
                                 Text(
                                     text = order.orderNumber,
-                                    color = EditorialRed,
+                                    color = MaterialTheme.colorScheme.primary,
                                     fontSize = 10.sp,
                                     fontWeight = FontWeight.Bold,
                                     modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
@@ -301,7 +301,7 @@ fun DashboardScreen(
                             Text(
                                 text = order.dateIso,
                                 fontSize = 10.sp,
-                                color = EditorialTextMuted
+                                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
                             )
                         }
                         Spacer(modifier = Modifier.height(4.dp))
@@ -309,12 +309,12 @@ fun DashboardScreen(
                             text = order.clientName,
                             fontWeight = FontWeight.Medium,
                             fontSize = 14.sp,
-                            color = EditorialTextPrimary
+                            color = MaterialTheme.colorScheme.onSurface
                         )
                         Text(
                             text = order.itemsSummary,
                             fontSize = 11.sp,
-                            color = EditorialTextMuted,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                             maxLines = 1
                         )
                     }
@@ -324,13 +324,13 @@ fun DashboardScreen(
                             text = viewModel.formatPrice(order.totalUsd),
                             fontWeight = FontWeight.Bold,
                             fontSize = 15.sp,
-                            color = EditorialTextPrimary
+                            color = MaterialTheme.colorScheme.onSurface
                         )
                         Surface(
                             color = when (order.status) {
                                 OrderStatus.ENTREGADO_FACTURADO -> EditorialGreenContainer
-                                OrderStatus.EN_DESPACHO -> EditorialAmberContainer
-                                else -> EditorialRedContainer
+                                OrderStatus.EN_DESPACHO -> MaterialTheme.colorScheme.tertiaryContainer
+                                else -> MaterialTheme.colorScheme.primaryContainer
                             },
                             shape = RoundedCornerShape(6.dp)
                         ) {
@@ -338,8 +338,8 @@ fun DashboardScreen(
                                 text = order.status.label.uppercase(),
                                 color = when (order.status) {
                                     OrderStatus.ENTREGADO_FACTURADO -> EditorialGreen
-                                    OrderStatus.EN_DESPACHO -> EditorialAmber
-                                    else -> EditorialRed
+                                    OrderStatus.EN_DESPACHO -> MaterialTheme.colorScheme.tertiary
+                                    else -> MaterialTheme.colorScheme.primary
                                 },
                                 fontSize = 9.sp,
                                 fontWeight = FontWeight.Bold,
@@ -369,8 +369,8 @@ fun EditorialKpiCard(
             .clip(RoundedCornerShape(24.dp))
             .clickable { onClick() },
         shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(containerColor = EditorialSurface),
-        border = androidx.compose.foundation.BorderStroke(1.dp, EditorialBorder)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(
@@ -381,7 +381,7 @@ fun EditorialKpiCard(
                 Text(
                     text = title,
                     fontSize = 10.sp,
-                    color = EditorialTextMuted,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                     fontWeight = FontWeight.Bold,
                     letterSpacing = 1.4.sp
                 )
@@ -405,7 +405,7 @@ fun EditorialKpiCard(
                 text = value,
                 fontWeight = FontWeight.Light,
                 fontSize = 26.sp,
-                color = EditorialTextPrimary
+                color = MaterialTheme.colorScheme.onSurface
             )
             Text(
                 text = subtitle,
@@ -431,8 +431,8 @@ fun EditorialQuickAction(
             .clip(RoundedCornerShape(20.dp))
             .clickable { onClick() },
         shape = RoundedCornerShape(20.dp),
-        colors = CardDefaults.cardColors(containerColor = EditorialSurface),
-        border = androidx.compose.foundation.BorderStroke(1.dp, EditorialBorder)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
     ) {
         Column(
             modifier = Modifier.padding(14.dp),
@@ -444,7 +444,7 @@ fun EditorialQuickAction(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Surface(
-                    color = EditorialRedContainer,
+                    color = MaterialTheme.colorScheme.primaryContainer,
                     shape = RoundedCornerShape(10.dp),
                     modifier = Modifier.size(34.dp)
                 ) {
@@ -452,18 +452,18 @@ fun EditorialQuickAction(
                         Icon(
                             imageVector = icon,
                             contentDescription = null,
-                            tint = EditorialRed,
+                            tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(18.dp)
                         )
                     }
                 }
                 Surface(
-                    color = EditorialSurfaceElevated,
+                    color = MaterialTheme.colorScheme.secondaryContainer,
                     shape = RoundedCornerShape(6.dp)
                 ) {
                     Text(
                         text = badge,
-                        color = EditorialTextMuted,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                         fontSize = 8.sp,
                         fontWeight = FontWeight.Bold,
                         letterSpacing = 0.5.sp,
@@ -475,7 +475,7 @@ fun EditorialQuickAction(
                 text = label,
                 fontWeight = FontWeight.Medium,
                 fontSize = 12.sp,
-                color = EditorialTextPrimary,
+                color = MaterialTheme.colorScheme.onSurface,
                 lineHeight = 16.sp
             )
         }

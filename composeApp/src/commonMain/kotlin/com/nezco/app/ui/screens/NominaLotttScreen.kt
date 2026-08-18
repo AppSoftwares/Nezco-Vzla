@@ -54,8 +54,8 @@ fun NominaLotttScreen(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(28.dp),
-                colors = CardDefaults.cardColors(containerColor = EditorialSurface),
-                border = androidx.compose.foundation.BorderStroke(1.dp, EditorialBorder)
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
             ) {
                 Column(modifier = Modifier.padding(20.dp)) {
                     Row(
@@ -66,7 +66,7 @@ fun NominaLotttScreen(
                         Column {
                             Text(
                                 text = "LEGISLACIÓN LABORAL · LOTTT",
-                                color = EditorialRed,
+                                color = MaterialTheme.colorScheme.primary,
                                 fontSize = 10.sp,
                                 fontWeight = FontWeight.Bold,
                                 letterSpacing = 1.6.sp
@@ -74,7 +74,7 @@ fun NominaLotttScreen(
                             Spacer(modifier = Modifier.height(2.dp))
                             Text(
                                 text = "Nómina Legal Venezolana",
-                                color = EditorialTextPrimary,
+                                color = MaterialTheme.colorScheme.onSurface,
                                 fontSize = 18.sp,
                                 fontWeight = FontWeight.Medium
                             )
@@ -82,15 +82,15 @@ fun NominaLotttScreen(
                         IconButton(
                             onClick = { showConfigModal = true },
                             modifier = Modifier
-                                .background(EditorialSurfaceElevated, RoundedCornerShape(12.dp))
+                                .background(MaterialTheme.colorScheme.secondaryContainer, RoundedCornerShape(12.dp))
                                 .size(38.dp)
                         ) {
-                            Icon(imageVector = Icons.Default.Tune, contentDescription = "Parámetros", tint = EditorialTextPrimary, modifier = Modifier.size(18.dp))
+                            Icon(imageVector = Icons.Default.Tune, contentDescription = "Parámetros", tint = MaterialTheme.colorScheme.onSurface, modifier = Modifier.size(18.dp))
                         }
                     }
 
                     Spacer(modifier = Modifier.height(16.dp))
-                    Divider(color = EditorialBorderLight)
+                    Divider(color = MaterialTheme.colorScheme.outlineVariant)
                     Spacer(modifier = Modifier.height(14.dp))
 
                     Row(
@@ -98,11 +98,11 @@ fun NominaLotttScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Column {
-                            Text("TOTAL NÓMINA MENSUAL", color = EditorialTextMuted, fontSize = 10.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.2.sp)
-                            Text(viewModel.formatPrice(totalNetPayrollUsd), color = EditorialTextPrimary, fontWeight = FontWeight.Light, fontSize = 24.sp)
+                            Text("TOTAL NÓMINA MENSUAL", color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f), fontSize = 10.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.2.sp)
+                            Text(viewModel.formatPrice(totalNetPayrollUsd), color = MaterialTheme.colorScheme.onSurface, fontWeight = FontWeight.Light, fontSize = 24.sp)
                         }
                         Column(horizontalAlignment = Alignment.End) {
-                            Text("TRABAJADORES", color = EditorialTextMuted, fontSize = 10.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.2.sp)
+                            Text("TRABAJADORES", color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f), fontSize = 10.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.2.sp)
                             Text("${employees.size} Activos", color = EditorialGreen, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                         }
                     }
@@ -115,7 +115,7 @@ fun NominaLotttScreen(
             Text(
                 text = "RECIBOS DE PAGO DE TRABAJADORES",
                 style = MaterialTheme.typography.labelSmall.copy(
-                    color = EditorialTextMuted,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                     letterSpacing = 1.6.sp
                 )
             )
@@ -135,8 +135,8 @@ fun NominaLotttScreen(
                     .clip(RoundedCornerShape(20.dp))
                     .clickable { selectedEmployeeForPayslip = emp },
                 shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(containerColor = EditorialSurface),
-                border = androidx.compose.foundation.BorderStroke(1.dp, EditorialBorder)
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(
@@ -149,21 +149,21 @@ fun NominaLotttScreen(
                                 text = emp.fullName,
                                 fontWeight = FontWeight.Medium,
                                 fontSize = 14.sp,
-                                color = EditorialTextPrimary
+                                color = MaterialTheme.colorScheme.onSurface
                             )
                             Text(
                                 text = "${emp.jobTitle} · CI: ${emp.cedula}",
                                 fontSize = 11.sp,
-                                color = EditorialTextMuted
+                                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
                             )
                         }
                         Surface(
-                            color = EditorialSurfaceElevated,
+                            color = MaterialTheme.colorScheme.secondaryContainer,
                             shape = RoundedCornerShape(6.dp)
                         ) {
                             Text(
                                 text = emp.roleType.title.uppercase(),
-                                color = EditorialRed,
+                                color = MaterialTheme.colorScheme.primary,
                                 fontSize = 9.sp,
                                 fontWeight = FontWeight.Bold,
                                 letterSpacing = 0.5.sp,
@@ -175,7 +175,7 @@ fun NominaLotttScreen(
                     Spacer(modifier = Modifier.height(12.dp))
 
                     Surface(
-                        color = EditorialSurfaceSub,
+                        color = MaterialTheme.colorScheme.surfaceVariant,
                         shape = RoundedCornerShape(12.dp),
                         modifier = Modifier.fillMaxWidth()
                     ) {
@@ -186,16 +186,16 @@ fun NominaLotttScreen(
                             horizontalArrangement = Arrangement.SpaceAround
                         ) {
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                Text("SALARIO BASE", fontSize = 9.sp, fontWeight = FontWeight.Bold, color = EditorialTextMuted, letterSpacing = 0.8.sp)
-                                Text(viewModel.formatPrice(emp.baseSalaryUsd), fontWeight = FontWeight.Medium, fontSize = 12.sp, color = EditorialTextPrimary)
+                                Text("SALARIO BASE", fontSize = 9.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f), letterSpacing = 0.8.sp)
+                                Text(viewModel.formatPrice(emp.baseSalaryUsd), fontWeight = FontWeight.Medium, fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurface)
                             }
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                Text("CESTATICKET", fontSize = 9.sp, fontWeight = FontWeight.Bold, color = EditorialTextMuted, letterSpacing = 0.8.sp)
+                                Text("CESTATICKET", fontSize = 9.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f), letterSpacing = 0.8.sp)
                                 Text(viewModel.formatPrice(cestaticket), fontWeight = FontWeight.Medium, fontSize = 12.sp, color = EditorialGreen)
                             }
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                Text("NETO A COBRAR", fontSize = 9.sp, fontWeight = FontWeight.Bold, color = EditorialTextMuted, letterSpacing = 0.8.sp)
-                                Text(viewModel.formatPrice(netPayUsd), fontWeight = FontWeight.Bold, fontSize = 13.sp, color = EditorialRed)
+                                Text("NETO A COBRAR", fontSize = 9.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f), letterSpacing = 0.8.sp)
+                                Text(viewModel.formatPrice(netPayUsd), fontWeight = FontWeight.Bold, fontSize = 13.sp, color = MaterialTheme.colorScheme.primary)
                             }
                         }
                     }
@@ -209,13 +209,13 @@ fun NominaLotttScreen(
                         Text(
                             text = "Garantía Prestaciones: ${viewModel.formatPrice(emp.accumulatedSeveranceUsd)}",
                             fontSize = 10.sp,
-                            color = EditorialTextMuted
+                            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
                         )
                         Text(
                             text = "Vacaciones: ${emp.pendingVacationDays} días",
                             fontSize = 10.sp,
                             fontWeight = FontWeight.Bold,
-                            color = EditorialAmber
+                            color = MaterialTheme.colorScheme.tertiary
                         )
                     }
                 }
@@ -234,7 +234,7 @@ fun NominaLotttScreen(
 
         ModalBottomSheet(
             onDismissRequest = { selectedEmployeeForPayslip = null },
-            containerColor = EditorialSurface
+            containerColor = MaterialTheme.colorScheme.surface
         ) {
             Column(
                 modifier = Modifier
@@ -249,33 +249,33 @@ fun NominaLotttScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Column {
-                        Text("GRUPO NEZCO VENEZUELA, C.A.", fontWeight = FontWeight.Bold, fontSize = 12.sp, color = EditorialTextPrimary, letterSpacing = 1.sp)
-                        Text("Recibo Oficial de Pago LOTTT", fontSize = 11.sp, color = EditorialTextMuted)
+                        Text("GRUPO NEZCO VENEZUELA, C.A.", fontWeight = FontWeight.Bold, fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurface, letterSpacing = 1.sp)
+                        Text("Recibo Oficial de Pago LOTTT", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f))
                     }
                     Surface(color = EditorialGreenContainer, shape = RoundedCornerShape(6.dp)) {
                         Text("MENSUAL", color = EditorialGreen, fontSize = 9.sp, fontWeight = FontWeight.Bold, letterSpacing = 0.5.sp, modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp))
                     }
                 }
 
-                Divider(color = EditorialBorderLight)
+                Divider(color = MaterialTheme.colorScheme.outlineVariant)
 
-                Text("Trabajador: ${emp.fullName} (${emp.cedula})", fontWeight = FontWeight.Medium, fontSize = 14.sp, color = EditorialTextPrimary)
-                Text("Cargo: ${emp.jobTitle} · Ingreso: ${emp.hireDate}", fontSize = 11.sp, color = EditorialTextMuted)
+                Text("Trabajador: ${emp.fullName} (${emp.cedula})", fontWeight = FontWeight.Medium, fontSize = 14.sp, color = MaterialTheme.colorScheme.onSurface)
+                Text("Cargo: ${emp.jobTitle} · Ingreso: ${emp.hireDate}", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f))
 
                 // Asignaciones
                 Surface(
-                    color = EditorialSurfaceSub,
+                    color = MaterialTheme.colorScheme.surfaceVariant,
                     shape = RoundedCornerShape(12.dp),
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(modifier = Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                         Text("➕ ASIGNACIONES:", fontWeight = FontWeight.Bold, fontSize = 10.sp, color = EditorialGreen, letterSpacing = 1.sp)
                         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                            Text("Salario Base Mensual", fontSize = 11.sp, color = EditorialTextBody)
-                            Text(viewModel.formatPrice(emp.baseSalaryUsd), fontSize = 11.sp, fontWeight = FontWeight.Medium, color = EditorialTextPrimary)
+                            Text("Salario Base Mensual", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text(viewModel.formatPrice(emp.baseSalaryUsd), fontSize = 11.sp, fontWeight = FontWeight.Medium, color = MaterialTheme.colorScheme.onSurface)
                         }
                         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                            Text("Cestaticket Alimentación (Decreto)", fontSize = 11.sp, color = EditorialTextBody)
+                            Text("Cestaticket Alimentación (Decreto)", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             Text(viewModel.formatPrice(cestaticket), fontSize = 11.sp, fontWeight = FontWeight.Medium, color = EditorialGreen)
                         }
                     }
@@ -283,47 +283,47 @@ fun NominaLotttScreen(
 
                 // Deducciones
                 Surface(
-                    color = EditorialSurfaceSub,
+                    color = MaterialTheme.colorScheme.surfaceVariant,
                     shape = RoundedCornerShape(12.dp),
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(modifier = Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                        Text("➖ DEDUCCIONES LEGALES (LOTTT):", fontWeight = FontWeight.Bold, fontSize = 10.sp, color = EditorialRed, letterSpacing = 1.sp)
+                        Text("➖ DEDUCCIONES LEGALES (LOTTT):", fontWeight = FontWeight.Bold, fontSize = 10.sp, color = MaterialTheme.colorScheme.primary, letterSpacing = 1.sp)
                         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                            Text("Seguro Social (IVSS 4%)", fontSize = 11.sp, color = EditorialTextBody)
-                            Text("- ${viewModel.formatPrice(ivss)}", fontSize = 11.sp, color = EditorialRed)
+                            Text("Seguro Social (IVSS 4%)", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text("- ${viewModel.formatPrice(ivss)}", fontSize = 11.sp, color = MaterialTheme.colorScheme.primary)
                         }
                         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                            Text("Ahorro Habitacional (FAOV 1%)", fontSize = 11.sp, color = EditorialTextBody)
-                            Text("- ${viewModel.formatPrice(faov)}", fontSize = 11.sp, color = EditorialRed)
+                            Text("Ahorro Habitacional (FAOV 1%)", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text("- ${viewModel.formatPrice(faov)}", fontSize = 11.sp, color = MaterialTheme.colorScheme.primary)
                         }
                         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                            Text("INCES Trabajador (0.5%)", fontSize = 11.sp, color = EditorialTextBody)
-                            Text("- ${viewModel.formatPrice(inces)}", fontSize = 11.sp, color = EditorialRed)
+                            Text("INCES Trabajador (0.5%)", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text("- ${viewModel.formatPrice(inces)}", fontSize = 11.sp, color = MaterialTheme.colorScheme.primary)
                         }
                     }
                 }
 
-                Divider(color = EditorialBorderLight)
+                Divider(color = MaterialTheme.colorScheme.outlineVariant)
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("NETO A PAGAR:", fontWeight = FontWeight.Bold, fontSize = 12.sp, color = EditorialTextPrimary, letterSpacing = 1.sp)
+                    Text("NETO A PAGAR:", fontWeight = FontWeight.Bold, fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurface, letterSpacing = 1.sp)
                     Column(horizontalAlignment = Alignment.End) {
                         Text(
                             text = "$${netPayUsd.formatTo2Decimals()} USD",
                             fontWeight = FontWeight.Bold,
                             fontSize = 16.sp,
-                            color = EditorialTextPrimary
+                            color = MaterialTheme.colorScheme.onSurface
                         )
                         Text(
                             text = "Bs. ${(netPayUsd * bcvRate).formatTo2Decimals()} (BCV ${bcvRate.formatTo2Decimals()})",
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Bold,
-                            color = EditorialAmber
+                            color = MaterialTheme.colorScheme.tertiary
                         )
                     }
                 }
@@ -343,9 +343,9 @@ fun NominaLotttScreen(
 
         AlertDialog(
             onDismissRequest = { showConfigModal = false },
-            containerColor = EditorialSurface,
+            containerColor = MaterialTheme.colorScheme.surface,
             title = {
-                Text("Parámetros Laborales LOTTT & BCV", fontWeight = FontWeight.Medium, fontSize = 16.sp, color = EditorialTextPrimary)
+                Text("Parámetros Laborales LOTTT & BCV", fontWeight = FontWeight.Medium, fontSize = 16.sp, color = MaterialTheme.colorScheme.onSurface)
             },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -399,7 +399,7 @@ fun NominaLotttScreen(
                         viewModel.updateLegalParameters(ivss, faov, inces, cesta)
                         showConfigModal = false
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = EditorialRed),
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                     shape = RoundedCornerShape(12.dp)
                 ) {
                     Text("GUARDAR PARÁMETROS", fontWeight = FontWeight.Bold, color = Color.White, letterSpacing = 1.sp)
@@ -407,7 +407,7 @@ fun NominaLotttScreen(
             },
             dismissButton = {
                 TextButton(onClick = { showConfigModal = false }) {
-                    Text("CANCELAR", color = EditorialTextMuted)
+                    Text("CANCELAR", color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f))
                 }
             }
         )

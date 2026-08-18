@@ -65,8 +65,8 @@ fun ChoferRouteScreen(
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(32.dp),
-                    colors = CardDefaults.cardColors(containerColor = EditorialSurface),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, EditorialBorder)
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
                 ) {
                     Column(modifier = Modifier.padding(22.dp)) {
                         Row(
@@ -77,7 +77,7 @@ fun ChoferRouteScreen(
                             Column(modifier = Modifier.weight(1f)) {
                                 Text(
                                     text = "PRÓXIMA PARADA",
-                                    color = EditorialTextMuted,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                                     fontSize = 11.sp,
                                     fontWeight = FontWeight.Bold,
                                     letterSpacing = 1.6.sp
@@ -85,14 +85,14 @@ fun ChoferRouteScreen(
                                 Spacer(modifier = Modifier.height(4.dp))
                                 Text(
                                     text = nextStop.clientName,
-                                    color = EditorialTextPrimary,
+                                    color = MaterialTheme.colorScheme.onSurface,
                                     fontSize = 20.sp,
                                     fontWeight = FontWeight.Medium,
                                     lineHeight = 24.sp
                                 )
                             }
                             Surface(
-                                color = if (nextStop.status == DeliveryStopStatus.EN_CAMINO) EditorialAmber else EditorialRed,
+                                color = if (nextStop.status == DeliveryStopStatus.EN_CAMINO) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.primary,
                                 shape = RoundedCornerShape(20.dp)
                             ) {
                                 Text(
@@ -110,7 +110,7 @@ fun ChoferRouteScreen(
 
                         // Nested Merchandise Item Box
                         Surface(
-                            color = EditorialSurfaceSub,
+                            color = MaterialTheme.colorScheme.surfaceVariant,
                             shape = RoundedCornerShape(18.dp),
                             modifier = Modifier.fillMaxWidth()
                         ) {
@@ -122,14 +122,14 @@ fun ChoferRouteScreen(
                                 horizontalArrangement = Arrangement.spacedBy(12.dp)
                             ) {
                                 Surface(
-                                    color = EditorialBg,
+                                    color = MaterialTheme.colorScheme.background,
                                     shape = RoundedCornerShape(12.dp),
                                     modifier = Modifier.size(40.dp)
                                 ) {
                                     Box(contentAlignment = Alignment.Center) {
                                         Text(
                                             text = "0${nextStop.stopOrder}",
-                                            color = EditorialRed,
+                                            color = MaterialTheme.colorScheme.primary,
                                             fontWeight = FontWeight.Black,
                                             fontSize = 14.sp
                                         )
@@ -141,14 +141,14 @@ fun ChoferRouteScreen(
                                         text = nextStop.itemsDescription,
                                         fontSize = 13.sp,
                                         fontWeight = FontWeight.Medium,
-                                        color = EditorialTextPrimary,
+                                        color = MaterialTheme.colorScheme.onSurface,
                                         maxLines = 1
                                     )
                                     Text(
                                         text = "DIRECCIÓN: ${nextStop.address.uppercase()}",
                                         fontSize = 9.sp,
                                         fontWeight = FontWeight.Bold,
-                                        color = EditorialTextMuted,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                                         letterSpacing = 0.5.sp,
                                         maxLines = 1
                                     )
@@ -158,7 +158,7 @@ fun ChoferRouteScreen(
                                     text = "#E-4492",
                                     fontFamily = FontFamily.Monospace,
                                     fontSize = 11.sp,
-                                    color = EditorialTextMuted,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                                     fontWeight = FontWeight.Bold
                                 )
                             }
@@ -183,7 +183,7 @@ fun ChoferRouteScreen(
                                     .weight(1f)
                                     .height(52.dp),
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = if (nextStop.status == DeliveryStopStatus.EN_CAMINO) EditorialGreen else EditorialRed
+                                    containerColor = if (nextStop.status == DeliveryStopStatus.EN_CAMINO) EditorialGreen else MaterialTheme.colorScheme.primary
                                 ),
                                 shape = RoundedCornerShape(16.dp)
                             ) {
@@ -201,8 +201,8 @@ fun ChoferRouteScreen(
                                 onClick = { showExpenseDialog = true },
                                 modifier = Modifier
                                     .size(52.dp)
-                                    .background(EditorialSurfaceElevated, RoundedCornerShape(16.dp))
-                                    .border(1.dp, EditorialBorderLight, RoundedCornerShape(16.dp))
+                                    .background(MaterialTheme.colorScheme.secondaryContainer, RoundedCornerShape(16.dp))
+                                    .border(1.dp, MaterialTheme.colorScheme.outlineVariant, RoundedCornerShape(16.dp))
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.ReceiptLong,
@@ -227,15 +227,15 @@ fun ChoferRouteScreen(
                 Card(
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(28.dp),
-                    colors = CardDefaults.cardColors(containerColor = EditorialSurface),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, EditorialBorder)
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
                 ) {
                     Column(modifier = Modifier.padding(18.dp)) {
                         Text(
                             text = "COMBUSTIBLE",
                             fontSize = 10.sp,
                             fontWeight = FontWeight.Bold,
-                            color = EditorialTextMuted,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                             letterSpacing = 1.6.sp
                         )
                         Spacer(modifier = Modifier.height(6.dp))
@@ -244,18 +244,18 @@ fun ChoferRouteScreen(
                                 text = "78",
                                 fontSize = 28.sp,
                                 fontWeight = FontWeight.Light,
-                                color = EditorialTextPrimary
+                                color = MaterialTheme.colorScheme.onSurface
                             )
                             Text(
                                 text = "%",
                                 fontSize = 12.sp,
-                                color = EditorialTextMuted,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                                 modifier = Modifier.padding(bottom = 4.dp)
                             )
                         }
                         Spacer(modifier = Modifier.height(10.dp))
                         Surface(
-                            color = EditorialSurfaceElevated,
+                            color = MaterialTheme.colorScheme.secondaryContainer,
                             shape = RoundedCornerShape(4.dp),
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -265,7 +265,7 @@ fun ChoferRouteScreen(
                                 modifier = Modifier
                                     .fillMaxHeight()
                                     .fillMaxWidth(0.78f)
-                                    .background(EditorialRed, RoundedCornerShape(4.dp))
+                                    .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(4.dp))
                             )
                         }
                     }
@@ -278,15 +278,15 @@ fun ChoferRouteScreen(
                 Card(
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(28.dp),
-                    colors = CardDefaults.cardColors(containerColor = EditorialSurface),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, EditorialBorder)
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
                 ) {
                     Column(modifier = Modifier.padding(18.dp)) {
                         Text(
                             text = "ENTREGAS",
                             fontSize = 10.sp,
                             fontWeight = FontWeight.Bold,
-                            color = EditorialTextMuted,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                             letterSpacing = 1.6.sp
                         )
                         Spacer(modifier = Modifier.height(6.dp))
@@ -295,12 +295,12 @@ fun ChoferRouteScreen(
                                 text = "$completedStops",
                                 fontSize = 28.sp,
                                 fontWeight = FontWeight.Light,
-                                color = EditorialTextPrimary
+                                color = MaterialTheme.colorScheme.onSurface
                             )
                             Text(
                                 text = "/ $totalStops",
                                 fontSize = 12.sp,
-                                color = EditorialTextMuted,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                                 modifier = Modifier.padding(bottom = 4.dp)
                             )
                         }
@@ -315,7 +315,7 @@ fun ChoferRouteScreen(
                                         .weight(1f)
                                         .height(4.dp)
                                         .background(
-                                            if (i <= completedStops) EditorialRed else EditorialSurfaceElevated,
+                                            if (i <= completedStops) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondaryContainer,
                                             RoundedCornerShape(4.dp)
                                         )
                                 )
@@ -328,10 +328,10 @@ fun ChoferRouteScreen(
 
         // Live GPS Pulse Banner
         item {
-            Surface(
-                color = EditorialRedContainer,
+                Surface(
+                color = MaterialTheme.colorScheme.primaryContainer,
                 shape = RoundedCornerShape(18.dp),
-                border = androidx.compose.foundation.BorderStroke(1.dp, EditorialRed.copy(alpha = 0.3f)),
+                border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Row(
@@ -342,11 +342,11 @@ fun ChoferRouteScreen(
                     Box(
                         modifier = Modifier
                             .size(8.dp)
-                            .background(EditorialRed.copy(alpha = alphaAnim), CircleShape)
+                            .background(MaterialTheme.colorScheme.primary.copy(alpha = alphaAnim), CircleShape)
                     )
                     Text(
                         text = "GPS Transmitiendo ubicación en vivo · Maracaibo Zulia",
-                        color = EditorialRed,
+                        color = MaterialTheme.colorScheme.primary,
                         fontSize = 11.sp,
                         fontWeight = FontWeight.Medium,
                         letterSpacing = 0.4.sp
@@ -360,7 +360,7 @@ fun ChoferRouteScreen(
             Text(
                 text = "HOJA DE RUTA DETALLADA",
                 style = MaterialTheme.typography.labelSmall.copy(
-                    color = EditorialTextMuted,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                     letterSpacing = 1.8.sp
                 ),
                 modifier = Modifier.padding(top = 4.dp)
@@ -421,11 +421,11 @@ fun StopCard(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(24.dp),
         colors = CardDefaults.cardColors(
-            containerColor = if (isDelivered) EditorialSurfaceSub else EditorialSurface
+            containerColor = if (isDelivered) MaterialTheme.colorScheme.surfaceVariant else MaterialTheme.colorScheme.surface
         ),
         border = androidx.compose.foundation.BorderStroke(
             1.dp,
-            if (isEnCamino) EditorialAmber else EditorialBorder
+            if (isEnCamino) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.outline
         )
     ) {
         Column(modifier = Modifier.padding(18.dp)) {
@@ -439,7 +439,7 @@ fun StopCard(
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     Surface(
-                        color = if (isDelivered) EditorialGreenContainer else EditorialSurfaceElevated,
+                        color = if (isDelivered) EditorialGreenContainer else MaterialTheme.colorScheme.secondaryContainer,
                         shape = RoundedCornerShape(10.dp),
                         modifier = Modifier.size(32.dp)
                     ) {
@@ -448,7 +448,7 @@ fun StopCard(
                                 text = "0${stop.stopOrder}",
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 12.sp,
-                                color = if (isDelivered) EditorialGreen else EditorialTextPrimary
+                                color = if (isDelivered) EditorialGreen else MaterialTheme.colorScheme.onSurface
                             )
                         }
                     }
@@ -457,12 +457,12 @@ fun StopCard(
                             text = stop.clientName,
                             fontWeight = FontWeight.Medium,
                             fontSize = 14.sp,
-                            color = EditorialTextPrimary
+                            color = MaterialTheme.colorScheme.onSurface
                         )
                         Text(
                             text = stop.address,
                             fontSize = 11.sp,
-                            color = EditorialTextMuted,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                             maxLines = 1
                         )
                     }
@@ -472,7 +472,7 @@ fun StopCard(
                     color = when (stop.status) {
                         DeliveryStopStatus.ENTREGADO -> EditorialGreenContainer
                         DeliveryStopStatus.EN_CAMINO -> EditorialAmberContainer
-                        else -> EditorialSurfaceElevated
+                        else -> MaterialTheme.colorScheme.secondaryContainer
                     },
                     shape = RoundedCornerShape(12.dp)
                 ) {
@@ -481,7 +481,7 @@ fun StopCard(
                         color = when (stop.status) {
                             DeliveryStopStatus.ENTREGADO -> EditorialGreen
                             DeliveryStopStatus.EN_CAMINO -> EditorialAmber
-                            else -> EditorialTextMuted
+                            else -> MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
                         },
                         fontSize = 9.sp,
                         fontWeight = FontWeight.Bold,
@@ -494,14 +494,14 @@ fun StopCard(
             Spacer(modifier = Modifier.height(10.dp))
 
             Surface(
-                color = EditorialSurfaceSub,
+                color = MaterialTheme.colorScheme.surfaceVariant,
                 shape = RoundedCornerShape(12.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
                     text = "📦 Carga: ${stop.itemsDescription}",
                     fontSize = 11.sp,
-                    color = EditorialTextBody,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(10.dp)
                 )
             }
@@ -517,8 +517,8 @@ fun StopCard(
                             onClick = onSaliaEntregar,
                             modifier = Modifier.weight(1f),
                             shape = RoundedCornerShape(14.dp),
-                            border = androidx.compose.foundation.BorderStroke(1.dp, EditorialAmber),
-                            colors = ButtonDefaults.outlinedButtonColors(contentColor = EditorialAmber)
+                            border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.tertiary),
+                            colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.tertiary)
                         ) {
                             Text("SALIR AL PUNTO", fontSize = 10.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.sp)
                         }
@@ -528,7 +528,7 @@ fun StopCard(
                         onClick = onMarcarEntregado,
                         modifier = Modifier.weight(1f),
                         shape = RoundedCornerShape(14.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = EditorialRed)
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
                     ) {
                         Text("ENTREGAR / FIRMA", fontSize = 10.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.sp, color = Color.White)
                     }
@@ -553,11 +553,11 @@ fun DeliveryCompletionDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        containerColor = EditorialSurface,
+        containerColor = MaterialTheme.colorScheme.surface,
         title = {
             Column {
-                Text("REGISTRAR ENTREGA", color = EditorialRed, fontSize = 10.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.5.sp)
-                Text(stop.clientName, color = EditorialTextPrimary, fontSize = 16.sp, fontWeight = FontWeight.Medium)
+                Text("REGISTRAR ENTREGA", color = MaterialTheme.colorScheme.primary, fontSize = 10.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.5.sp)
+                Text(stop.clientName, color = MaterialTheme.colorScheme.onSurface, fontSize = 16.sp, fontWeight = FontWeight.Medium)
             }
         },
         text = {
@@ -596,11 +596,11 @@ fun DeliveryCompletionDialog(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text("¿Préstamo / Dejó extintor Nezco?", fontSize = 12.sp, color = EditorialTextBody)
+                        Text("¿Préstamo / Dejó extintor Nezco?", fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         Switch(
                             checked = isLoanExchange,
                             onCheckedChange = { isLoanExchange = it },
-                            colors = SwitchDefaults.colors(checkedThumbColor = EditorialRed, checkedTrackColor = EditorialRedContainer)
+                            colors = SwitchDefaults.colors(checkedThumbColor = MaterialTheme.colorScheme.primary, checkedTrackColor = MaterialTheme.colorScheme.primaryContainer)
                         )
                     }
                 }
@@ -645,7 +645,7 @@ fun DeliveryCompletionDialog(
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("CANCELAR", color = EditorialTextMuted)
+                Text("CANCELAR", color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f))
             }
         }
     )
@@ -662,16 +662,16 @@ fun RouteExpenseDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        containerColor = EditorialSurface,
+        containerColor = MaterialTheme.colorScheme.surface,
         title = {
             Column {
-                Text("GASTO DE RUTA", color = EditorialRed, fontSize = 10.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.5.sp)
-                Text("Cargar Comprobante / Gasto", color = EditorialTextPrimary, fontSize = 16.sp, fontWeight = FontWeight.Medium)
+                Text("GASTO DE RUTA", color = MaterialTheme.colorScheme.primary, fontSize = 10.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.5.sp)
+                Text("Cargar Comprobante / Gasto", color = MaterialTheme.colorScheme.onSurface, fontSize = 16.sp, fontWeight = FontWeight.Medium)
             }
         },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                Text("Categoría:", fontSize = 11.sp, color = EditorialTextMuted, fontWeight = FontWeight.Bold)
+                Text("Categoría:", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f), fontWeight = FontWeight.Bold)
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(6.dp)
@@ -682,16 +682,16 @@ fun RouteExpenseDialog(
                         ExpenseCategory.VIATICOS_COMIDA to "Viáticos"
                     ).forEach { (cat, label) ->
                         Surface(
-                            color = if (selectedCategory == cat) EditorialRedContainer else EditorialSurfaceElevated,
+                            color = if (selectedCategory == cat) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.secondaryContainer,
                             shape = RoundedCornerShape(10.dp),
-                            border = androidx.compose.foundation.BorderStroke(1.dp, if (selectedCategory == cat) EditorialRed else EditorialBorder),
+                            border = androidx.compose.foundation.BorderStroke(1.dp, if (selectedCategory == cat) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline),
                             modifier = Modifier
                                 .clip(RoundedCornerShape(10.dp))
                                 .clickable { selectedCategory = cat }
                         ) {
                             Text(
                                 text = label,
-                                color = if (selectedCategory == cat) EditorialRed else EditorialTextMuted,
+                                color = if (selectedCategory == cat) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.Bold,
                                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp)
@@ -716,7 +716,7 @@ fun RouteExpenseDialog(
                 )
 
                 Surface(
-                    color = EditorialSurfaceSub,
+                    color = MaterialTheme.colorScheme.surfaceVariant,
                     shape = RoundedCornerShape(12.dp),
                     modifier = Modifier.fillMaxWidth()
                 ) {
@@ -725,8 +725,8 @@ fun RouteExpenseDialog(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Icon(imageVector = Icons.Default.CameraAlt, contentDescription = null, tint = EditorialRed, modifier = Modifier.size(18.dp))
-                        Text("Foto de recibo digitalizada", fontSize = 11.sp, color = EditorialTextBody)
+                        Icon(imageVector = Icons.Default.CameraAlt, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
+                        Text("Foto de recibo digitalizada", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 }
             }
@@ -737,7 +737,7 @@ fun RouteExpenseDialog(
                     val amt = amountText.toDoubleOrNull() ?: 10.0
                     onSubmit(selectedCategory, description.ifBlank { "Gasto de Ruta Chofer" }, amt)
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = EditorialRed),
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                 shape = RoundedCornerShape(12.dp)
             ) {
                 Text("ENVIAR A REVISIÓN", fontWeight = FontWeight.Bold, color = Color.White, letterSpacing = 1.sp)
@@ -745,7 +745,7 @@ fun RouteExpenseDialog(
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("CANCELAR", color = EditorialTextMuted)
+                Text("CANCELAR", color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f))
             }
         }
     )

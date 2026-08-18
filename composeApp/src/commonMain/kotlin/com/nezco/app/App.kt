@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nezco.app.ui.components.*
@@ -45,82 +46,98 @@ fun NezcoApp(
         }
     }
 
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        topBar = {
-            NezcoTopBar(
-                currentRole = currentRole,
-                currencyMode = currencyMode,
-                bcvRate = systemConfig?.bcvRateBs ?: 68.50,
-                cartItemCount = cart.sumOf { it.quantity },
-                onRoleClick = { showRoleDialog = true },
-                onCurrencyToggle = { viewModel.toggleCurrency() },
-                onCartClick = { viewModel.setTab("catalogo") },
-                onConfigClick = { viewModel.setTab("nomina") }
-            )
-        },
-        bottomBar = {
-            NezcoBottomBar(
-                currentTab = currentTab,
-                currentRole = currentRole,
-                onTabSelected = { viewModel.setTab(it) }
-            )
-        },
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
-        }
-    ) { innerPadding ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-        ) {
-            AnimatedContent(
-                targetState = currentTab,
-                label = "ScreenTransition"
-            ) { targetScreen ->
-                when (targetScreen) {
-                    "dashboard" -> DashboardScreen(
-                        viewModel = viewModel,
-                        onNavigate = { viewModel.setTab(it) }
+    BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+        val isWideScreen = maxWidth > 600.dp
+
+        Row(modifier = Modifier.fillMaxSize()) {
+            if (isWideScreen) {
+                NezcoNavigationRail(
+                    currentTab = currentTab,
+                    currentRole = currentRole,
+                    onTabSelected = { viewModel.setTab(it) }
+                )
+            }
+
+            Scaffold(
+                modifier = Modifier.weight(1f),
+                topBar = {
+                    NezcoTopBar(
+                        currentRole = currentRole,
+                        currencyMode = currencyMode,
+                        bcvRate = systemConfig?.bcvRateBs ?: 68.50,
+                        cartItemCount = cart.sumOf { it.quantity },
+                        onRoleClick = { showRoleDialog = true },
+                        onCurrencyToggle = { viewModel.toggleCurrency() },
+                        onCartClick = { viewModel.setTab("catalogo") },
+                        onConfigClick = { viewModel.setTab("nomina") }
                     )
-                    "chofer_ruta" -> ChoferRouteScreen(
-                        viewModel = viewModel,
-                        onNavigateToExpenses = { viewModel.setTab("gastos") }
-                    )
-                    "despacho_radar" -> DespachadorRadarScreen(
-                        viewModel = viewModel,
-                        onNavigateToRoute = { viewModel.setTab("chofer_ruta") }
-                    )
-                    "catalogo", "pos_venta" -> CatalogPosScreen(
-                        viewModel = viewModel,
-                        isPosModeDefault = targetScreen == "pos_venta"
-                    )
-                    "taller" -> TallerRecargaScreen(
-                        viewModel = viewModel
-                    )
-                    "almacen" -> AlmacenInventarioScreen(
-                        viewModel = viewModel
-                    )
-                    "prestamos" -> ExtintoresPrestamoScreen(
-                        viewModel = viewModel
-                    )
-                    "cobranzas" -> CuentasPorCobrarPagarScreen(
-                        viewModel = viewModel
-                    )
-                    "gastos" -> GastosScreen(
-                        viewModel = viewModel
-                    )
-                    "nomina" -> NominaLotttScreen(
-                        viewModel = viewModel
-                    )
-                    "auditoria" -> AuditoriaScreen(
-                        viewModel = viewModel
-                    )
-                    else -> DashboardScreen(
-                        viewModel = viewModel,
-                        onNavigate = { viewModel.setTab(it) }
-                    )
+                },
+                bottomBar = {
+                    if (!isWideScreen) {
+                        NezcoBottomBar(
+                            currentTab = currentTab,
+                            currentRole = currentRole,
+                            onTabSelected = { viewModel.setTab(it) }
+                        )
+                    }
+                },
+                snackbarHost = {
+                    SnackbarHost(hostState = snackbarHostState)
+                }
+            ) { innerPadding ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding)
+                ) {
+                    AnimatedContent(
+                        targetState = currentTab,
+                        label = "ScreenTransition"
+                    ) { targetScreen ->
+                        when (targetScreen) {
+                            "dashboard" -> DashboardScreen(
+                                viewModel = viewModel,
+                                onNavigate = { viewModel.setTab(it) }
+                            )
+                            "chofer_ruta" -> ChoferRouteScreen(
+                                viewModel = viewModel,
+                                onNavigateToExpenses = { viewModel.setTab("gastos") }
+                            )
+                            "despacho_radar" -> DespachadorRadarScreen(
+                                viewModel = viewModel,
+                                onNavigateToRoute = { viewModel.setTab("chofer_ruta") }
+                            )
+                            "catalogo", "pos_venta" -> CatalogPosScreen(
+                                viewModel = viewModel,
+                                isPosModeDefault = targetScreen == "pos_venta"
+                            )
+                            "taller" -> TallerRecargaScreen(
+                                viewModel = viewModel
+                            )
+                            "almacen" -> AlmacenInventarioScreen(
+                                viewModel = viewModel
+                            )
+                            "prestamos" -> ExtintoresPrestamoScreen(
+                                viewModel = viewModel
+                            )
+                            "cobranzas" -> CuentasPorCobrarPagarScreen(
+                                viewModel = viewModel
+                            )
+                            "gastos" -> GastosScreen(
+                                viewModel = viewModel
+                            )
+                            "nomina" -> NominaLotttScreen(
+                                viewModel = viewModel
+                            )
+                            "auditoria" -> AuditoriaScreen(
+                                viewModel = viewModel
+                            )
+                            else -> DashboardScreen(
+                                viewModel = viewModel,
+                                onNavigate = { viewModel.setTab(it) }
+                            )
+                        }
+                    }
                 }
             }
         }

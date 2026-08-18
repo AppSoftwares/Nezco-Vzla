@@ -167,7 +167,7 @@ fun CatalogPosScreen(
         // Floating Cart Bottom Pill
         if (totalCartItems > 0) {
             Surface(
-                color = NezcoNavy,
+                color = MaterialTheme.colorScheme.primaryContainer,
                 shape = RoundedCornerShape(16.dp),
                 tonalElevation = 10.dp,
                 shadowElevation = 8.dp,
@@ -186,19 +186,19 @@ fun CatalogPosScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                        Badge(containerColor = NezcoSafetyRed) {
-                            Text("$totalCartItems", color = Color.White, fontWeight = FontWeight.Bold)
+                        Badge(containerColor = MaterialTheme.colorScheme.primary) {
+                            Text("$totalCartItems", color = MaterialTheme.colorScheme.onPrimary, fontWeight = FontWeight.Bold)
                         }
                         Column {
                             Text(
                                 text = "Carrito / Pedido Actual",
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onPrimaryContainer,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 13.sp
                             )
                             Text(
                                 text = "Toca para revisar y facturar",
-                                color = Color.White.copy(alpha = 0.7f),
+                                color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f),
                                 fontSize = 10.sp
                             )
                         }
@@ -207,14 +207,14 @@ fun CatalogPosScreen(
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         Text(
                             text = viewModel.formatPrice(totalCartUsd),
-                            color = NezcoAmberGold,
+                            color = MaterialTheme.colorScheme.tertiary,
                             fontWeight = FontWeight.Black,
                             fontSize = 16.sp
                         )
                         Icon(
                             imageVector = Icons.Default.ArrowForwardIos,
                             contentDescription = "Abrir Carrito",
-                            tint = Color.White,
+                            tint = MaterialTheme.colorScheme.onPrimaryContainer,
                             modifier = Modifier.size(14.dp)
                         )
                     }
@@ -242,12 +242,12 @@ fun CatalogPosScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Surface(
-                        color = NezcoSafetyRed.copy(alpha = 0.15f),
+                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f),
                         shape = RoundedCornerShape(6.dp)
                     ) {
                         Text(
                             text = prod.category.coveninCode,
-                            color = NezcoSafetyRed,
+                            color = MaterialTheme.colorScheme.primary,
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
@@ -255,7 +255,7 @@ fun CatalogPosScreen(
                     }
                     Text(
                         text = viewModel.formatPrice(prod.priceUsd),
-                        color = NezcoNavy,
+                        color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.Black,
                         fontSize = 20.sp
                     )
@@ -326,7 +326,7 @@ fun CatalogPosScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(48.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = NezcoNavy),
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                     shape = RoundedCornerShape(10.dp)
                 ) {
                     Icon(imageVector = Icons.Default.AddShoppingCart, contentDescription = null)
@@ -356,7 +356,7 @@ fun CatalogPosScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Icon(imageVector = Icons.Default.ShoppingCart, contentDescription = null, tint = NezcoNavy)
+                        Icon(imageVector = Icons.Default.ShoppingCart, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                         Text(
                             text = if (isPosMode) "POS: Resumen de Compra" else "Carrito de Pedido / Cotización",
                             fontWeight = FontWeight.Bold,
@@ -364,7 +364,7 @@ fun CatalogPosScreen(
                         )
                     }
                     TextButton(onClick = { viewModel.clearCart() }) {
-                        Text("Vaciar", color = NezcoSafetyRed)
+                        Text("Vaciar", color = MaterialTheme.colorScheme.primary)
                     }
                 }
 
@@ -437,7 +437,7 @@ fun CatalogPosScreen(
                         text = viewModel.formatPrice(totalCartUsd),
                         fontWeight = FontWeight.Black,
                         fontSize = 20.sp,
-                        color = NezcoNavy
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
 
@@ -449,7 +449,7 @@ fun CatalogPosScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(48.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = if (isPosMode) NezcoGreen else NezcoNavy),
+                    colors = ButtonDefaults.buttonColors(containerColor = if (isPosMode) EditorialGreen else MaterialTheme.colorScheme.primary),
                     shape = RoundedCornerShape(10.dp)
                 ) {
                     Icon(
@@ -511,8 +511,8 @@ fun ProductCard(
             // Extinguisher / Category Badge Icon
             Surface(
                 color = when (product.category) {
-                    ProductCategory.PQS -> NezcoSafetyRed.copy(alpha = 0.15f)
-                    ProductCategory.CO2 -> NezcoNavy.copy(alpha = 0.15f)
+                    ProductCategory.PQS -> MaterialTheme.colorScheme.primary.copy(alpha = 0.15f)
+                    ProductCategory.CO2 -> MaterialTheme.colorScheme.secondary.copy(alpha = 0.15f)
                     ProductCategory.SOLKAFLAM -> Color(0xFF0284C7).copy(alpha = 0.15f)
                     ProductCategory.GABINETES -> Color(0xFFEA580C).copy(alpha = 0.15f)
                     ProductCategory.MANGUERAS -> Color(0xFF7C3AED).copy(alpha = 0.15f)
@@ -526,8 +526,8 @@ fun ProductCard(
                         imageVector = if (product.isExtinguisher) Icons.Default.FireExtinguisher else Icons.Default.Shield,
                         contentDescription = null,
                         tint = when (product.category) {
-                            ProductCategory.PQS -> NezcoSafetyRed
-                            ProductCategory.CO2 -> NezcoNavy
+                            ProductCategory.PQS -> MaterialTheme.colorScheme.primary
+                            ProductCategory.CO2 -> MaterialTheme.colorScheme.secondary
                             ProductCategory.SOLKAFLAM -> Color(0xFF0284C7)
                             ProductCategory.GABINETES -> Color(0xFFEA580C)
                             ProductCategory.MANGUERAS -> Color(0xFF7C3AED)
@@ -554,7 +554,7 @@ fun ProductCard(
                             text = product.category.coveninCode,
                             fontSize = 9.sp,
                             fontWeight = FontWeight.Bold,
-                            color = NezcoNavyLight,
+                            color = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.padding(horizontal = 4.dp, vertical = 1.dp)
                         )
                     }
@@ -577,15 +577,15 @@ fun ProductCard(
                         text = formattedPrice,
                         fontWeight = FontWeight.Black,
                         fontSize = 14.sp,
-                        color = NezcoNavy
+                        color = MaterialTheme.colorScheme.primary
                     )
                     Surface(
-                        color = if (isLowStock) NezcoAmberContainer else NezcoGreenContainer,
+                        color = if (isLowStock) MaterialTheme.colorScheme.tertiaryContainer else EditorialGreenContainer,
                         shape = RoundedCornerShape(4.dp)
                     ) {
                         Text(
                             text = "Stock: ${product.stockPrincipal}",
-                            color = if (isLowStock) NezcoAmber else NezcoGreen,
+                            color = if (isLowStock) MaterialTheme.colorScheme.tertiary else EditorialGreen,
                             fontSize = 10.sp,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp)
@@ -598,12 +598,12 @@ fun ProductCard(
                 onClick = onAddToCart,
                 modifier = Modifier
                     .size(40.dp)
-                    .background(NezcoNavy, RoundedCornerShape(10.dp))
+                    .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(10.dp))
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = "Añadir",
-                    tint = Color.White,
+                    tint = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier.size(20.dp)
                 )
             }
@@ -632,7 +632,7 @@ fun CheckoutDialog(
                 Icon(
                     imageVector = if (isPos) Icons.Default.Receipt else Icons.Default.LocalShipping,
                     contentDescription = null,
-                    tint = NezcoNavy
+                    tint = MaterialTheme.colorScheme.primary
                 )
                 Text(
                     text = if (isPos) "Emitir Factura POS Directa" else "Crear Orden de Despacho",
@@ -647,7 +647,7 @@ fun CheckoutDialog(
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 Surface(
-                    color = NezcoNavy.copy(alpha = 0.08f),
+                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.08f),
                     shape = RoundedCornerShape(8.dp),
                     modifier = Modifier.fillMaxWidth()
                 ) {
@@ -657,7 +657,7 @@ fun CheckoutDialog(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text("Monto Total:", fontWeight = FontWeight.Bold, fontSize = 13.sp)
-                        Text(formattedTotal, fontWeight = FontWeight.Black, fontSize = 16.sp, color = NezcoNavy)
+                        Text(formattedTotal, fontWeight = FontWeight.Black, fontSize = 16.sp, color = MaterialTheme.colorScheme.primary)
                     }
                 }
 
@@ -723,7 +723,7 @@ fun CheckoutDialog(
                         paymentStatus
                     )
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = if (isPos) NezcoGreen else NezcoNavy)
+                colors = ButtonDefaults.buttonColors(containerColor = if (isPos) EditorialGreen else MaterialTheme.colorScheme.primary)
             ) {
                 Text(if (isPos) "CONFIRMAR VENTA POS" else "CONFIRMAR PEDIDO", fontWeight = FontWeight.Bold)
             }

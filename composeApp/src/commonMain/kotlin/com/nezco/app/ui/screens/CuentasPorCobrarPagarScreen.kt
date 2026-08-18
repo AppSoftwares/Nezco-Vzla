@@ -46,18 +46,18 @@ fun CuentasPorCobrarPagarScreen(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = NezcoNavy)
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
                         text = "Gestión Financiera CxC & CxP",
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer,
                         fontWeight = FontWeight.Bold,
                         fontSize = 15.sp
                     )
                     Text(
                         text = "Cuentas por Cobrar (Clientes) y Cuentas por Pagar (Proveedores)",
-                        color = Color.White.copy(alpha = 0.8f),
+                        color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f),
                         fontSize = 11.sp
                     )
 
@@ -68,12 +68,12 @@ fun CuentasPorCobrarPagarScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Column {
-                            Text("Por Cobrar a Clientes (CxC)", color = Color.White.copy(alpha = 0.7f), fontSize = 10.sp)
-                            Text(viewModel.formatPrice(totalPendingCxCUsd), color = NezcoAmberGold, fontWeight = FontWeight.Black, fontSize = 18.sp)
+                            Text("Por Cobrar a Clientes (CxC)", color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f), fontSize = 10.sp)
+                            Text(viewModel.formatPrice(totalPendingCxCUsd), color = MaterialTheme.colorScheme.tertiary, fontWeight = FontWeight.Black, fontSize = 18.sp)
                         }
                         Column(horizontalAlignment = Alignment.End) {
-                            Text("CxP Proveedores (Insumos)", color = Color.White.copy(alpha = 0.7f), fontSize = 10.sp)
-                            Text(viewModel.formatPrice(2350.0), color = Color.White, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                            Text("CxP Proveedores (Insumos)", color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f), fontSize = 10.sp)
+                            Text(viewModel.formatPrice(2350.0), color = MaterialTheme.colorScheme.onPrimaryContainer, fontWeight = FontWeight.Bold, fontSize = 16.sp)
                         }
                     }
                 }
@@ -85,7 +85,7 @@ fun CuentasPorCobrarPagarScreen(
             TabRow(
                 selectedTabIndex = selectedTab,
                 containerColor = MaterialTheme.colorScheme.surfaceVariant,
-                contentColor = NezcoNavy
+                contentColor = MaterialTheme.colorScheme.primary
             ) {
                 Tab(
                     selected = selectedTab == 0,
@@ -140,12 +140,12 @@ fun CuentasPorCobrarPagarScreen(
                                     )
                                 }
                                 Surface(
-                                    color = if (order.paymentStatus == PaymentStatus.ABONO_PARCIAL) NezcoAmberContainer else NezcoSafetyRedContainer,
+                                    color = if (order.paymentStatus == PaymentStatus.ABONO_PARCIAL) MaterialTheme.colorScheme.tertiaryContainer else MaterialTheme.colorScheme.primaryContainer,
                                     shape = RoundedCornerShape(4.dp)
                                 ) {
                                     Text(
                                         text = order.paymentStatus.label,
-                                        color = if (order.paymentStatus == PaymentStatus.ABONO_PARCIAL) NezcoAmber else NezcoSafetyRed,
+                                        color = if (order.paymentStatus == PaymentStatus.ABONO_PARCIAL) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.primary,
                                         fontSize = 10.sp,
                                         fontWeight = FontWeight.Bold,
                                         modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
@@ -160,7 +160,7 @@ fun CuentasPorCobrarPagarScreen(
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
                                 Text("Total Factura: ${viewModel.formatPrice(order.totalUsd)}", fontSize = 11.sp)
-                                Text("Abonado: ${viewModel.formatPrice(order.paidAmountUsd)}", fontSize = 11.sp, color = NezcoGreen, fontWeight = FontWeight.SemiBold)
+                                Text("Abonado: ${viewModel.formatPrice(order.paidAmountUsd)}", fontSize = 11.sp, color = EditorialGreen, fontWeight = FontWeight.SemiBold)
                             }
 
                             Spacer(modifier = Modifier.height(4.dp))
@@ -174,12 +174,12 @@ fun CuentasPorCobrarPagarScreen(
                                     text = "Saldo Pendiente: ${viewModel.formatPrice(debtUsd)}",
                                     fontWeight = FontWeight.Black,
                                     fontSize = 13.sp,
-                                    color = NezcoSafetyRed
+                                    color = MaterialTheme.colorScheme.primary
                                 )
 
                                 Button(
                                     onClick = { orderForPayment = order },
-                                    colors = ButtonDefaults.buttonColors(containerColor = NezcoGreen),
+                                    colors = ButtonDefaults.buttonColors(containerColor = EditorialGreen),
                                     shape = RoundedCornerShape(8.dp)
                                 ) {
                                     Icon(imageVector = Icons.Default.AddCard, contentDescription = null, modifier = Modifier.size(16.dp))
@@ -222,7 +222,7 @@ fun CuentasPorCobrarPagarScreen(
                                 text = viewModel.formatPrice(item.third),
                                 fontWeight = FontWeight.Black,
                                 fontSize = 14.sp,
-                                color = NezcoNavy
+                                color = MaterialTheme.colorScheme.primary
                             )
                         }
                         Text(
@@ -236,12 +236,12 @@ fun CuentasPorCobrarPagarScreen(
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text("Condición: Crédito 30 Días", fontSize = 10.sp, color = NezcoAmber, fontWeight = FontWeight.SemiBold)
+                            Text("Condición: Crédito 30 Días", fontSize = 10.sp, color = MaterialTheme.colorScheme.tertiary, fontWeight = FontWeight.SemiBold)
                             Surface(
-                                color = NezcoAmberContainer,
+                                color = MaterialTheme.colorScheme.tertiaryContainer,
                                 shape = RoundedCornerShape(4.dp)
                             ) {
-                                Text("PENDIENTE POR PAGAR", color = NezcoAmber, fontSize = 9.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp))
+                                Text("PENDIENTE POR PAGAR", color = MaterialTheme.colorScheme.tertiary, fontSize = 9.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp))
                             }
                         }
                     }
@@ -264,7 +264,7 @@ fun CuentasPorCobrarPagarScreen(
                     Text("Cliente: ${order.clientName}", fontWeight = FontWeight.Bold, fontSize = 13.sp)
                     Text("Total Factura: ${viewModel.formatPrice(order.totalUsd)}", fontSize = 12.sp)
                     val remainingBalance = order.totalUsd - order.paidAmountUsd
-                    Text("Saldo Restante: ${viewModel.formatPrice(remainingBalance)}", fontSize = 12.sp, color = NezcoSafetyRed, fontWeight = FontWeight.Bold)
+                    Text("Saldo Restante: ${viewModel.formatPrice(remainingBalance)}", fontSize = 12.sp, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
 
                     OutlinedTextField(
                         value = paymentAmountText,

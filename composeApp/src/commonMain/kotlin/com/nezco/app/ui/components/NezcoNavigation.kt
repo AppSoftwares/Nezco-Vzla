@@ -47,6 +47,42 @@ val allNavItems = listOf(
     NavItem("auditoria", "Auditoría", Res.drawable.ic_nav_modulos, "Trazabilidad inmutable")
 )
 
+fun getPrimaryNavItems(currentRole: NezcoRole): List<NavItem> {
+    return when (currentRole) {
+        NezcoRole.CHOFER -> listOf(
+            NavItem("chofer_ruta", "Ruta", Res.drawable.ic_nav_ruta, "Entregas activas"),
+            NavItem("gastos", "Gastos", Res.drawable.ic_nav_modulos, "Gastos de ruta"),
+            NavItem("prestamos", "Comodato", Res.drawable.ic_nav_modulos, "Extintores prestados")
+        )
+        NezcoRole.DESPACHADOR -> listOf(
+            NavItem("despacho_radar", "Radar GPS", Res.drawable.ic_nav_modulos, "Monitoreo flota"),
+            NavItem("chofer_ruta", "Despachos", Res.drawable.ic_nav_ruta, "Rutas activas"),
+            NavItem("prestamos", "Comodato", Res.drawable.ic_nav_modulos, "Préstamos")
+        )
+        NezcoRole.VENTA, NezcoRole.POS_LOCAL -> listOf(
+            NavItem("catalogo", "Catálogo", Res.drawable.ic_nav_ventas, "Ventas y POS"),
+            NavItem("cobranzas", "Cobranzas", Res.drawable.ic_nav_modulos, "CxC Clientes"),
+            NavItem("almacen", "Stock", Res.drawable.ic_nav_modulos, "Disponibilidad")
+        )
+        NezcoRole.TALLER -> listOf(
+            NavItem("taller", "Taller", Res.drawable.ic_nav_taller, "Órdenes de recarga"),
+            NavItem("almacen", "Insumos", Res.drawable.ic_nav_modulos, "Polvo y repuestos"),
+            NavItem("prestamos", "Comodato", Res.drawable.ic_nav_modulos, "Cilindros prestados")
+        )
+        NezcoRole.ALMACENISTA -> listOf(
+            NavItem("almacen", "Almacén", Res.drawable.ic_nav_modulos, "Stock multicentral"),
+            NavItem("prestamos", "Comodato", Res.drawable.ic_nav_modulos, "Extintores cliente"),
+            NavItem("catalogo", "Catálogo", Res.drawable.ic_nav_ventas, "Equipos")
+        )
+        NezcoRole.ADMIN, NezcoRole.SUPER_ADMIN -> listOf(
+            NavItem("dashboard", "Métricas", Res.drawable.ic_nav_metricas, "Panel general"),
+            NavItem("catalogo", "Ventas/POS", Res.drawable.ic_nav_ventas, "Catálogo"),
+            NavItem("chofer_ruta", "Ruta", Res.drawable.ic_nav_ruta, "Despachos"),
+            NavItem("taller", "Taller", Res.drawable.ic_nav_taller, "Recargas")
+        )
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NezcoBottomBar(
@@ -55,42 +91,7 @@ fun NezcoBottomBar(
     onTabSelected: (String) -> Unit
 ) {
     var showMoreSheet by remember { mutableStateOf(false) }
-
-    val primaryItems = remember(currentRole) {
-        when (currentRole) {
-            NezcoRole.CHOFER -> listOf(
-                NavItem("chofer_ruta", "Ruta", Res.drawable.ic_nav_ruta, "Entregas activas"),
-                NavItem("gastos", "Gastos", Res.drawable.ic_nav_modulos, "Gastos de ruta"),
-                NavItem("prestamos", "Comodato", Res.drawable.ic_nav_modulos, "Extintores prestados")
-            )
-            NezcoRole.DESPACHADOR -> listOf(
-                NavItem("despacho_radar", "Radar GPS", Res.drawable.ic_nav_modulos, "Monitoreo flota"),
-                NavItem("chofer_ruta", "Despachos", Res.drawable.ic_nav_ruta, "Rutas activas"),
-                NavItem("prestamos", "Comodato", Res.drawable.ic_nav_modulos, "Préstamos")
-            )
-            NezcoRole.VENTA, NezcoRole.POS_LOCAL -> listOf(
-                NavItem("catalogo", "Catálogo", Res.drawable.ic_nav_ventas, "Ventas y POS"),
-                NavItem("cobranzas", "Cobranzas", Res.drawable.ic_nav_modulos, "CxC Clientes"),
-                NavItem("almacen", "Stock", Res.drawable.ic_nav_modulos, "Disponibilidad")
-            )
-            NezcoRole.TALLER -> listOf(
-                NavItem("taller", "Taller", Res.drawable.ic_nav_taller, "Órdenes de recarga"),
-                NavItem("almacen", "Insumos", Res.drawable.ic_nav_modulos, "Polvo y repuestos"),
-                NavItem("prestamos", "Comodato", Res.drawable.ic_nav_modulos, "Cilindros prestados")
-            )
-            NezcoRole.ALMACENISTA -> listOf(
-                NavItem("almacen", "Almacén", Res.drawable.ic_nav_modulos, "Stock multicentral"),
-                NavItem("prestamos", "Comodato", Res.drawable.ic_nav_modulos, "Extintores cliente"),
-                NavItem("catalogo", "Catálogo", Res.drawable.ic_nav_ventas, "Equipos")
-            )
-            NezcoRole.ADMIN, NezcoRole.SUPER_ADMIN -> listOf(
-                NavItem("dashboard", "Métricas", Res.drawable.ic_nav_metricas, "Panel general"),
-                NavItem("catalogo", "Ventas/POS", Res.drawable.ic_nav_ventas, "Catálogo"),
-                NavItem("chofer_ruta", "Ruta", Res.drawable.ic_nav_ruta, "Despachos"),
-                NavItem("taller", "Taller", Res.drawable.ic_nav_taller, "Recargas")
-            )
-        }
-    }
+    val primaryItems = remember(currentRole) { getPrimaryNavItems(currentRole) }
 
     Surface(
         color = MaterialTheme.colorScheme.surface,
@@ -286,5 +287,80 @@ fun NezcoBottomBar(
                 Spacer(modifier = Modifier.height(16.dp))
             }
         }
+    }
+}
+
+@Composable
+fun NezcoNavigationRail(
+    currentTab: String,
+    currentRole: NezcoRole,
+    onTabSelected: (String) -> Unit
+) {
+    val items = remember(currentRole) {
+        getPrimaryNavItems(currentRole)
+    }
+
+    NavigationRail(
+        containerColor = MaterialTheme.colorScheme.surface,
+        header = {
+            Icon(
+                painter = painterResource(Res.drawable.ic_nav_modulos),
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(32.dp).padding(vertical = 16.dp)
+            )
+        },
+        modifier = Modifier.fillMaxHeight()
+    ) {
+        items.forEach { item ->
+            val isSelected = currentTab == item.id
+            NavigationRailItem(
+                selected = isSelected,
+                onClick = { onTabSelected(item.id) },
+                icon = {
+                    Icon(
+                        painter = painterResource(item.iconRes),
+                        contentDescription = item.label,
+                        modifier = Modifier.size(24.dp)
+                    )
+                },
+                label = {
+                    Text(
+                        text = item.label,
+                        fontSize = 10.sp,
+                        fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium
+                    )
+                },
+                colors = NavigationRailItemDefaults.colors(
+                    selectedIconColor = MaterialTheme.colorScheme.primary,
+                    unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    selectedTextColor = MaterialTheme.colorScheme.primary,
+                    unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    indicatorColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f)
+                )
+            )
+        }
+        
+        Spacer(modifier = Modifier.weight(1f))
+        
+        // Módulos item at bottom of rail
+        NavigationRailItem(
+            selected = false,
+            onClick = { /* Could show a dialog or expanded menu */ },
+            icon = {
+                Icon(
+                    painter = painterResource(Res.drawable.ic_nav_modulos),
+                    contentDescription = "Módulos",
+                    modifier = Modifier.size(24.dp)
+                )
+            },
+            label = {
+                Text("Módulos", fontSize = 10.sp)
+            },
+            colors = NavigationRailItemDefaults.colors(
+                unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        )
     }
 }

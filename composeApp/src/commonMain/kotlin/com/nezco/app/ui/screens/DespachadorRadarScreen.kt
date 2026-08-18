@@ -48,8 +48,8 @@ fun DespachadorRadarScreen(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = NezcoNavyDark),
-                border = androidx.compose.foundation.BorderStroke(1.dp, NezcoNavyLight)
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background),
+                border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(
@@ -59,24 +59,24 @@ fun DespachadorRadarScreen(
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             Surface(
-                                color = Color(0xFF0284C7),
+                                color = MaterialTheme.colorScheme.primary,
                                 shape = CircleShape,
                                 modifier = Modifier.size(10.dp)
                             ) {}
                             Text(
                                 text = "Radar GPS de Flota Nezco",
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 15.sp
                             )
                         }
                         Surface(
-                            color = Color(0xFF0369A1),
+                            color = MaterialTheme.colorScheme.secondaryContainer,
                             shape = RoundedCornerShape(6.dp)
                         ) {
                             Text(
                                 text = "TELEMETRÍA EN VIVO",
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onSecondaryContainer,
                                 fontSize = 9.sp,
                                 fontWeight = FontWeight.Bold,
                                 modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
@@ -273,15 +273,15 @@ fun DespachadorRadarScreen(
                             Text(
                                 text = "Detalle: ${stop.itemsDescription}",
                                 fontSize = 10.sp,
-                                color = NezcoNavyLight
+                                color = MaterialTheme.colorScheme.primary
                             )
                         }
                     }
 
                     Surface(
                         color = when (stop.status) {
-                            DeliveryStopStatus.ENTREGADO -> NezcoGreenContainer
-                            DeliveryStopStatus.EN_CAMINO -> NezcoAmberContainer
+                            DeliveryStopStatus.ENTREGADO -> EditorialGreenContainer
+                            DeliveryStopStatus.EN_CAMINO -> MaterialTheme.colorScheme.tertiaryContainer
                             else -> MaterialTheme.colorScheme.surfaceVariant
                         },
                         shape = RoundedCornerShape(6.dp)
@@ -289,8 +289,8 @@ fun DespachadorRadarScreen(
                         Text(
                             text = stop.status.label,
                             color = when (stop.status) {
-                                DeliveryStopStatus.ENTREGADO -> NezcoGreen
-                                DeliveryStopStatus.EN_CAMINO -> NezcoAmber
+                                DeliveryStopStatus.ENTREGADO -> EditorialGreen
+                                DeliveryStopStatus.EN_CAMINO -> MaterialTheme.colorScheme.tertiary
                                 else -> MaterialTheme.colorScheme.onSurfaceVariant
                             },
                             fontSize = 10.sp,
