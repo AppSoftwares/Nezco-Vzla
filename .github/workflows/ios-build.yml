@@ -74,6 +74,7 @@ jobs:
             xcodebuild -scheme iosApp \
               -configuration Release \
               -sdk iphoneos \
+              -derivedDataPath build \
               CODE_SIGNING_ALLOWED=NO \
               CODE_SIGNING_REQUIRED=NO \
               clean build
