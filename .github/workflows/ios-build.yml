@@ -1,12 +1,10 @@
-name: iOS Build IPA
+name: Nezco CI/CD - Android, iOS & Web
 
 on:
   workflow_dispatch:
-    inputs:
-      base_name:
-        description: 'Nombre del archivo base'
-        required: true
-        default: 'Nezco'
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   build:
@@ -35,6 +33,36 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x gradlew
 
+      - name: Extract and Update Version
+        id: versioning
+        run: |
+          # Read current values
+          VERSION_NAME=$(grep "versionName =" composeApp/build.gradle.kts | head -n 1 | awk -F'"' '{print $2}')
+          VERSION_CODE=$(grep "versionCode =" composeApp/build.gradle.kts | head -n 1 | sed 's/[^0-9]//g')
+          
+          # Use tag if present, else use current +1 increment logic or same version
+          if [[ $GITHUB_REF == refs/tags/v* ]]; then
+            TARGET_VERSION=${GITHUB_REF#refs/tags/v}
+          else
+            TARGET_VERSION=$VERSION_NAME
+          fi
+          
+          NEW_CODE=$((VERSION_CODE + 1))
+          
+          # Update build.gradle.kts (macOS sed syntax)
+          sed -i '' "s/versionCode = .*/versionCode = $NEW_CODE/" composeApp/build.gradle.kts
+          sed -i '' "s/versionName = .*/versionName = \"$TARGET_VERSION\"/" composeApp/build.gradle.kts
+          
+          # Sync version.json files
+          JSON_CONTENT="{\"version\": \"$TARGET_VERSION\", \"versionCode\": $NEW_CODE, \"releaseNotes\": \"Auto-updated by CI\", \"downloadUrlAndroid\": \"https://github.com/AppSoftwares/Nezco-Vzla/releases/download/v$TARGET_VERSION/Nezco-$TARGET_VERSION.apk\", \"downloadUrlIOS\": \"https://github.com/AppSoftwares/Nezco-Vzla/releases/download/v$TARGET_VERSION/Nezco-$TARGET_VERSION.ipa\"}"
+          echo $JSON_CONTENT > composeApp/src/wasmJsMain/resources/version.json
+          mkdir -p composeApp/src/androidMain/res/raw
+          echo $JSON_CONTENT > composeApp/src/androidMain/res/raw/version.json
+          echo $JSON_CONTENT > iosApp/iosApp/version.json
+          
+          echo "v_name=$TARGET_VERSION" >> $GITHUB_OUTPUT
+          echo "v_code=$NEW_CODE" >> $GITHUB_OUTPUT
+
       - name: Generate debug keystore
         run: |
           if [ ! -f composeApp/debug.keystore ]; then
@@ -49,16 +77,10 @@ jobs:
       - name: Clean
         run: ./gradlew clean --no-daemon
 
-      - name: Verify Gradle config
-        run: ./gradlew :composeApp:dependencies --configuration releaseRuntimeClasspath --no-daemon --console=plain || true
-
       - name: Build Android APK
         run: ./gradlew :composeApp:assembleRelease --stacktrace --no-daemon --no-configuration-cache --console=plain -Pandroid.skip.google.services=true
         env:
           JAVA_OPTS: "-Xmx6g"
-
-      - name: Clean generated resources before Wasm build
-        run: rm -rf composeApp/build/generated/compose
 
       - name: Build Web (Wasm)
         run: ./gradlew :composeApp:wasmJsBrowserDistribution --stacktrace --no-daemon --no-configuration-cache --console=plain -Pandroid.skip.google.services=true
@@ -67,43 +89,37 @@ jobs:
 
       - name: Build iOS App (No Sign)
         run: |
-          echo "Checking for iosApp project..."
-          if [ -d "iosApp" ] && [ -f "iosApp/iosApp.xcodeproj/project.pbxproj" ]; then
-            echo "Project found. Building..."
-            cd iosApp
-            xcodebuild -scheme iosApp \
-              -configuration Release \
-              -sdk iphoneos \
-              -derivedDataPath build \
-              CODE_SIGNING_ALLOWED=NO \
-              CODE_SIGNING_REQUIRED=NO \
-              clean build
-            cd ..
-          else
-            echo "❌ ERROR: No se encontró el proyecto iosApp.xcodeproj."
-            echo "Asegúrate de subir la carpeta iosApp completa a GitHub."
-            exit 1
-          fi
+          echo "Building iOS..."
+          cd iosApp
+          xcodebuild -scheme iosApp \
+            -configuration Release \
+            -sdk iphoneos \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            clean build
+          cd ..
 
-      - name: Package IPA Manually
+      - name: Package Artifacts
         run: |
+          # Rename Android APK
+          mv composeApp/build/outputs/apk/release/composeApp-release.apk "Nezco-${{ steps.versioning.outputs.v_name }}.apk"
+          
+          # Package IPA
           mkdir -p Payload
           APP_PATH=$(find iosApp/build -name "*.app" -type d | head -n 1)
-          if [ -z "$APP_PATH" ]; then
-            echo "❌ ERROR: No se encontró el binario .app compilado."
-            exit 1
-          fi
           cp -r "$APP_PATH" Payload/
-          zip -r ${{ github.event.inputs.base_name }}-V1.0.1.ipa Payload
+          zip -r "Nezco-${{ steps.versioning.outputs.v_name }}.ipa" Payload
           
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ github.run_number }}
-          name: Release v${{ github.run_number }}
+          tag_name: v${{ steps.versioning.outputs.v_name }}
+          name: Release v${{ steps.versioning.outputs.v_name }}
+          body: "Nezco Build ${{ steps.versioning.outputs.v_name }} (${{ steps.versioning.outputs.v_code }})"
           files: |
-            composeApp/build/outputs/apk/release/*.apk
-            ${{ github.event.inputs.base_name }}-V1.0.1.ipa
+            Nezco-${{ steps.versioning.outputs.v_name }}.apk
+            Nezco-${{ steps.versioning.outputs.v_name }}.ipa
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -118,4 +134,3 @@ jobs:
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           working-directory: ./composeApp/build/dist/wasmJs/productionExecutable
           vercel-args: '--prod'
-
